@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <h1>Review</h1>
+    {% for review in reviews %}
+      <p>{{ review.pk }}</p>
+      <p>{{ review.title }}</p>
+      <p>{{ review.rank }}</p>
+      <p>{{ review.content }}</p>
+      <p>{{ review.created_at }}</p>
+      <p>{{ review.updated_at }}</p>
+      <p>{{ movie_title }}
+      <hr>
+    {% endfor %}
+{% endblock content %}

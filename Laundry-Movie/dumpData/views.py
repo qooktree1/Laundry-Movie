@@ -19,8 +19,8 @@ def genre_data(request):
 
     if serializer.is_valid():
         serializer.save()
-    with open("genre_data.json", 'w', encoding='utf-8') as file:
-        json.dump(data, file, indent="\t", ensure_ascii=False)
+
+    
     return Response(serializer.data)
 
 
@@ -32,8 +32,8 @@ def movie_data(request):
         tmp.delete()
 
     # 영화 개수 1페이지당 20개
-    
-    for page in range(1, 21):
+    # 원래 1, 21    
+    for page in range(1, 3):
         res = requests.get(link+str(page))
         data_list = res.json()['results']
 
@@ -69,9 +69,8 @@ def movie_data(request):
                 video_path=video_path,
                 runtime=runtime,
             )
+
             for movie_genre in data.get('genres') :
                 genre = Genre.objects.get(pk=movie_genre.get("id"))
                 movie.genres.add(genre)
-    with open("movie_data.json", 'w', encoding='utf-8') as file:
-        json.dump(data, file, indent="\t", ensure_ascii=False)
     return Response()

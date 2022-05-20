@@ -1,11 +1,28 @@
 from django.http import JsonResponse
+from django.views.decorators.http import require_safe
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.shortcuts import get_list_or_404
+from django.shortcuts import get_list_or_404, render
 from .models import Movie, Genre
 from .serializers import GenreSerializer, MovieDetailSerializer, MovieSerializer
 
+
+@require_safe
+def index(request):
+    return render(request, 'movies/index.html')
+
+
+@require_safe
+def home(request):
+    highscore_movies = Movie.objects.order_by('-vote_average').prefetch_related('genres')[:12]
+    highscore_serializer = MovieSerializer(data=highscore_movies, many=True)
+    highscore_serializer.is_valid()
+
+    context = {
+        'highscore_serializer': highscore_serializer.data,
+    }
+    return render(request, 'movies/home.html', context)
 
 
 # Home 로그인 상황 - 빨래 시간 순삭! - 영화 구분하는 알고리즘!
@@ -104,7 +121,3 @@ def movie_detail(request, movie_pk):
         'same_genres': same_genre_serializer.data,
     }
     return Response(context)
-
-
-def movie_algorithm():
-    pass
