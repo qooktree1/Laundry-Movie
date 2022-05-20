@@ -8,6 +8,8 @@ from .models import Movie, Genre
 from .serializers import GenreSerializer, MovieDetailSerializer, MovieSerializer
 
 
+
+
 @require_safe
 def index(request):
     return render(request, 'movies/index.html')
@@ -23,6 +25,11 @@ def home(request):
         'highscore_serializer': highscore_serializer.data,
     }
     return render(request, 'movies/home.html', context)
+
+
+
+def tips(request):
+    return render(request, 'movies/tips.html')
 
 
 # Home 로그인 상황 - 빨래 시간 순삭! - 영화 구분하는 알고리즘!
