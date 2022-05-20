@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -9,7 +10,15 @@ from .serializers import MovieSerializer
 
 @api_view(['GET'])
 def index(request):    
-    movies = Movie.objects.order_by('-vote_average').prefetch_related('genres')
-    serializer = MovieSerializer(data=movies, many=True)
-    if serializer.is_valid():
-        return Response(serializer.data)
+    highscore_movies = Movie.objects.order_by('-vote_average')
+    hightscore_serializer = MovieSerializer(data=highscore_movies, many=True)
+    hightscore_serializer.is_valid()  # 왜 이렇게 사용할까??
+    context = {
+        'hightscore_serializer': hightscore_serializer.data,
+    }
+    return Response(context)
+
+
+@api_view(['GET'])
+def movie_detail(request):
+    pass
