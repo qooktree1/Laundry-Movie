@@ -21,6 +21,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'movies',
     'dumpData',
+    'accounts',
     
     # 3rd party
     'rest_framework',
