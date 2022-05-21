@@ -58,11 +58,18 @@
 
 <div class="show_movies d-flex justify-content-center">
   
-  <div class="row mx-auto">
+  <div class="row mx-auto" id="movie_list">
     {% comment %}  highscore_serializer 이거를 바꿔야 함 어떻게???? {% endcomment %}
+    {% if !movie_list %}
     {% for movies in highscore_serializer %}
-    <div class="mb-2 col-12 col-sm-6 col-md-4 col-lg-3">
-      <img src="https://image.tmdb.org/t/p/w500/{{ movies.poster_path }}" class="img-fluid">
+    {% endif %}
+    <div class="mb-4 col-12 col-md-6 col-lg-4">
+      <div class="card text-center" style="min-width: 18rem;">
+        <a href=""><img src="https://image.tmdb.org/t/p/w500/{{ movies.poster_path }}" class="img-fluid"></a>
+        <div class="card-body">
+          <h4>{{ movies.title }}</h4>
+        </div>
+      </div>
     </div>
     {% endfor %}
   </div>
@@ -71,7 +78,7 @@
 {% endblock content %}
 {% block script %}
 <script>
-  let print_movies = document.querySelector('#show_movies')
+  let print_movies = document.querySelector('highscore_serializer')
 
   document.addEventListener('input', (e) => {
     e.preventDefault()
@@ -84,11 +91,12 @@
     })
       .then(res => {
 
-        if (e.target.getAttribute('name') == 'color') {
+        if (e.target.getAttribute('name') === 'color') {
           let color_movie = e.target.getAttribute('id')
     
           if (color_movie === 'white') {
             console.log(res.data.white_movie_serializer)
+            print_movies.innerText = res.data.white_movie_serializer
           }
         }
       })
