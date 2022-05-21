@@ -14,12 +14,13 @@
     {% comment %} NavBar {% endcomment %}
     <img class="navbar-brand mx-auto img-fluid d-block" src="{% static 'LOGO.png'%}" alt="logo_img" style="width:340px;">
     
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-md bg-light">
 
       <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <div class="collapse navbar-collapse  d-flex justify-content-between" id="navbarTogglerDemo02">
 
-          <ul class="navbar-nav me-auto">
+          {% comment %} 메뉴들 {% endcomment %}
+          <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link active fs-5" aria-current="page" href="{% url 'movies:home' %}">Home</a>
             </li>
@@ -35,11 +36,15 @@
             </li>
           </ul>
 
-          
+          {% comment %} 질문하기 {% endcomment %}
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
           </form>
+
+          {% comment %} User 창 {% endcomment %}
+
+
         </div>
       </div>
     </nav>
@@ -96,6 +101,7 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://kit.fontawesome.com/8591a8f1c6.js" crossorigin="anonymous"></script>
 {% block script %}  
 {% endblock script %}
 
