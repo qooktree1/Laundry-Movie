@@ -1,23 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block style %}
+<style>
+  .card{
+    height: 300px;
+  }
+</style>
+{% endblock style %}
 {% block content %}
-
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+<h1 class="text-center my-5">추천 영화</h1>
+<div id="carouselExampleControls" class="carousel slide mt-5" data-bs-ride="carousel">
   <div class="carousel-inner">
 
     <div class="carousel-item active">
       <div class="d-flex">
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.0.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.0.poster_path }}" class="card-img-top" alt="movie-img1">
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.1.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.1.poster_path }}" class="card-img-top" alt="movie-img2">
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.2.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.2.poster_path }}" class="card-img-top" alt="movie-img3">
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.3.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.3.poster_path }}" class="card-img-top" alt="movie-img4">
         </div>
       </div>
     </div>
@@ -25,16 +32,16 @@
     <div class="carousel-item">
       <div class="d-flex">
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.4.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.4.poster_path }}" class="card-img-top" alt="movie-img5">
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.5.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.5.poster_path }}" class="card-img-top" alt="movie-img6">
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.6.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.6.poster_path }}" class="card-img-top" alt="movie-img7">
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.7.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.7.poster_path }}" class="card-img-top" alt="movie-img8">
         </div>
       </div>
     </div>
@@ -42,16 +49,16 @@
     <div class="carousel-item">
       <div class="d-flex">
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.8.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.8.poster_path }}" class="card-img-top" alt="movie-img9">
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.9.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.9.poster_path }}" class="card-img-top" alt="movie-img10">
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.10.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.10.poster_path }}" class="card-img-top" alt="movie-img11">
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.11.poster_path }}" class="card-img-top" alt="movie-img">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.11.poster_path }}" class="card-img-top" alt="movie-img12">
         </div>
       </div>
     </div>
@@ -67,7 +74,7 @@
 
 
 {% comment %}  Table {% endcomment %}
-<table class="table table-hover">
+<table class="table table-hover mt-5">
   <tr>
     <th>
       s
