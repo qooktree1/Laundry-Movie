@@ -121,14 +121,13 @@ def movie_list(request):
 # 선택한 영화의 정보와 비슷한 영화 즉, 선택한 영화의장르를 가진 영화들?
 @api_view(['GET'])
 def movie_detail(request, movie_pk):
-    
     movie = Movie.objects.get(pk=movie_pk)
     movie_list = [movie]  # iterable 하게 만들기
     movie_serializer = MovieDetailSerializer(data=movie_list, many=True)
     # 영화의 장르 목록 (genres)에서 찾고자하는 장르를 갖고있는 모든 영화들을 출력하기
     
     genres = movie.genres.all().values_list('id', flat=True) # 영화의 모든 genre를 id 객체로 가져오기 (flat=true) : 튜플 아닌 리스트 형식으로 가져오는것
-    movies_same_genre = Movie.objects.filter(genres__id__in=genres).prefetch_related('genres').distinct().order_by('-vote_average')[:5]
+    movies_same_genre = Movie.objects.filter(genres__id__in=genres).prefetch_related('genres').distinct()[:5]
     same_genre_serializer = MovieSerializer(data = movies_same_genre, many=True)
     
     # 유효성 검사
@@ -139,4 +138,5 @@ def movie_detail(request, movie_pk):
         'movie': movie_serializer.data,
         'same_genres': same_genre_serializer.data,
     }
+    return render(request, 'movies/movie_detail.html', context)
     return Response(context)

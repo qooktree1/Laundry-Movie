@@ -77,11 +77,12 @@
 
 <div class="" id="show-movies">
   <div class="row mx-auto" id="create-or-delete">
-  {% for movies in highscore_serializer %}
+  {% for movie in highscore_serializer %}
     <div class="mb-4 col-6 col-sm-6 col-md-4 col-lg-3">
 
       <div class="card" style="">
-        <a class="" href=""><img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ movies.poster_path }}"></a>
+        
+        <a class="" href="{% url 'movies:movie_detail' movie.id %}"><img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"></a>
       </div>
 
     </div>

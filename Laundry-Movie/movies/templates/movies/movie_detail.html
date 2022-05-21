@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block style %}
+{% endblock style %}
+
+{% block content %}
+<div class="mt-5 d-flex">
+  <div class="card" style="max-width: 18rem">
+    <img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.0.poster_path }}">
+  </div>
+
+  <div class="">
+    <p class="fs-3 text-center">{{ movie.0.title }}</p>
+    <div class="d-flex justify-content-center">
+      <p class="me-5">개봉: {{ movie.0.release_date }}</p>
+      <p class="ms-5">평점: {{ movie.0.vote_average }}</p>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <p class="me-5">장르:
+        {% for a in movie.0.genres %}
+        {{ a.name }} 
+        {% endfor %}
+      </p>
+      <p class="ms-5">러닝타임: {{ movie.0.runtime }}</p>
+    </div>
+
+    <p class="">줄거리: {{ movie.0.overview }}</p>
+  </div>
+
+</div>
+<iframe width="900rem" height="500rem"src="https://www.youtube.com/embed/{{ movie.0.video_path }}" frameborder="0"></iframe>
+
+
+<div class="d-flex">
+  {% for same_movie in same_genres %}
+  <div class="card" style="max-width: 18rem">
+    <img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ same_movie.poster_path }}">
+  </div>
+  {% endfor %}
+</div>
+
+
+
+{% comment %} 리뷰 쓰기!!! {% endcomment %}
+<div class="d-flex justify-content-end mt-3">
+  <button type="button" class="btn btn-primary">리뷰 쓰기</button>
+</div>
+
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}
