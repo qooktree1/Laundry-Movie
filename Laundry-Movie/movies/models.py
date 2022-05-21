@@ -16,3 +16,6 @@ class Movie(models.Model):
     poster_path = models.CharField(max_length=200)
     video_path = models.CharField(max_length=200)
     runtime = models.IntegerField()
+
+    def __str__(self):
+        return self.title

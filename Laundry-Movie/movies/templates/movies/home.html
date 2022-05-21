@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block style %}
+<style>
+  .card-img-top {
+      width: 100%;
+      height: 30vw;
+      object-fit: cover;
+    }
+    .selected-movie{
+      transition: all 0.2s linear;
+    }
+    .selected-movie:hover{
+      transform: scale(1.08);
+    }
+
+</style>
+{% endblock style %}
 {% block content %}
 <h1 class="text-center my-5">추천 영화</h1>
 <div id="carouselExampleControls" class="carousel slide mt-5" data-bs-ride="carousel">
