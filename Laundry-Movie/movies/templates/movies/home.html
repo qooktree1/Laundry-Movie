@@ -1,70 +1,86 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}    
+{% block content %}
 
-
-{% comment %}
-1. carousel에 씌우기
-{% endcomment %}
-<div class="d-flex">
-{% for movie in highscore_serializer %}
-<div class="card" style="width: 18rem;">
-  <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" class="card-img-top" alt="movie-img">
-</div>
-{% endfor %}
-</div>
-
-<div id="carouselMovieControl" class="carousel slide" data-bs-ride="carousel">
-  {% for movie in highscore_serializer %}
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
 
-    {% if forloop.counter|divisibleby:4 %}
     <div class="carousel-item active">
-      <img src="..." class="d-block w-100" alt="...">
+      <div class="d-flex">
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.0.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.1.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.2.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.3.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+      </div>
     </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-    {% endif %}
     
+    <div class="carousel-item">
+      <div class="d-flex">
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.4.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.5.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.6.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.7.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <div class="d-flex">
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.8.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.9.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.10.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.11.poster_path }}" class="card-img-top" alt="movie-img">
+        </div>
+      </div>
+    </div>
   </div>
-  {% comment %} 양쪽 전환 버튼 {% endcomment %}
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselMovieControl" data-bs-slide="prev">
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselMovieControl" data-bs-slide="next">
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
   </button>
-  {% endfor %}
 </div>
-<p>{ movieArray }</p>
 
 
-
-
+{% comment %}  Table {% endcomment %}
+<table class="table table-hover">
+  <tr>
+    <th>
+      s
+    </th>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+  </tr>
+  <tr><td>d</td></tr>
+  <tr><td>g</td></tr>
+</table>
 {% endblock content %}
 {% block script %}
 <script>
-  const movieArray = []
-  {% for movie in highscore_serializer %}
-  movieArray.push(`https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}`)
-  {% endfor %}
-  console.log(movieArray)
 </script>
 {% endblock script %}
-
-{% comment %}                                    어디서 받는지?!
-{% for movie in highscore_serializer %}
-<img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" class="card-img-top" alt="movie-img">
-{% endcomment %}
-
-
-
-{% comment %}                                   카드 형식
-  <div class="card" style="width: 18rem;">
-    <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" class="card-img-top" alt="movie-img">
-  </div>
-  {% endcomment %}
