@@ -5,48 +5,84 @@
   <div class="">
     <h1>어떤 빨래를 하시나요?</h1>
   </div>
-  <form action="{% url 'movies:selected' %}" method="POST">
+  <form id="select-form">
 
 
     <h4>빨래 색상</h4>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-      <label class="form-check-label" for="flexRadioDefault1">흰색</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="white" name="color">
+      <label class="form-check-label" for="white">흰색</label>
     </div>
 
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-      <label class="form-check-label" for="flexRadioDefault2">검은색</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="black" name="color">
+      <label class="form-check-label" for="black">검은색</label>
     </div>
 
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-      <label class="form-check-label" for="flexRadioDefault2">다른색</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="other" name="color">
+      <label class="form-check-label" for="other">다른색</label>
     </div>
-    
+  </form>
+  
+  <form id="select-form">
     <h4>세탁 모드</h4>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-      <label class="form-check-label" for="flexRadioDefault1">빠름</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="fast" name="runtime">
+      <label class="form-check-label" for="fast">빠름</label>
     </div>
 
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-      <label class="form-check-label" for="flexRadioDefault1">보통</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="normal" name="runtime">
+      <label class="form-check-label" for="normal">보통</label>
     </div>
 
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-      <label class="form-check-label" for="flexRadioDefault1">느림</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="slow" name="runtime">
+      <label class="form-check-label" for="slow">느림</label>
     </div>
+  </form>
 
 </div>
 
 {% comment %} 추천 런드리 무비 {% endcomment %}
 <div>
   <h1>추천 런드리무비</h1>
-  <div>
+  <div class="show_movies">
 
   </div>
 </div>
 {% endblock content %}
+{% block script %}
+<script>
+  const forms = document.querySelectorAll('#select-form')
+  forms.addEventListener('submit', function (event) {
+    event.preventDefault()
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    axios({
+      method: 'post',
+      headers: {'X-CSRFToken': csrftoken},
+      url: `http://127.0.0.1:8000/movies/selected`,
+    })
+      .then(response => {
+        if (color === 'white') {
+          console.log(white_movie_serializer)
+        } else if (color === 'black') {
+
+        } else if (color === 'other') {
+
+        }
+
+        if (runtime === 'fast') {
+
+        } else if (runtime === 'normal') {
+
+        } else if (runtime === 'slow') {
+
+        }
+      })
+  })
+  
+</script>
+{% endblock script %}
