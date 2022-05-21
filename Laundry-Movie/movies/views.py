@@ -3,6 +3,7 @@ from django.views.decorators.http import require_safe
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import get_list_or_404, render
 from .models import Movie, Genre
 from .serializers import GenreSerializer, MovieDetailSerializer, MovieSerializer
@@ -90,7 +91,7 @@ def selected(request):
         'white_movie_serializer': white_movie_serializer.data,
         'black_movie_serializer': black_movie_serializer.data,
         'other_movie_serializer': other_movie_serializer.data,
-        'hightscore_serializer': highscore_serializer.data,
+        'highscore_serializer': highscore_serializer.data,
     }
     return render(request, 'movies/selected.html', context)
 
@@ -100,7 +101,8 @@ def tips(request):
 
 
 # Home 로그인 상황 - 빨래 시간 순삭! - 영화 구분하는 알고리즘!
-@api_view(['GET'])
+@api_view(['POST'])
+@require_POST
 def movie_list(request):
     highscore_movies = Movie.objects.order_by('-vote_average').prefetch_related('genres')  # 평점 높은 순
 
@@ -168,7 +170,7 @@ def movie_list(request):
         'other_movie_serializer': other_movie_serializer.data,
         'highscore_serializer': highscore_serializer.data,
     }
-    return Response(context)
+    return JsonResponse(context)
     
 
 # 영화 상세 페이지

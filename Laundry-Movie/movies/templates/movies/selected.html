@@ -6,7 +6,7 @@
     <h1>어떤 빨래를 하시나요?</h1>
   </div>
   <form id="select-form">
-
+    {% csrf_token %}
 
     <h4>빨래 색상</h4>
     <div class="form-check form-check-inline">
@@ -26,6 +26,8 @@
   </form>
   
   <form id="select-form">
+    {% csrf_token %}
+
     <h4>세탁 모드</h4>
     <div class="form-check form-check-inline">
       <input class="form-check-input" type="radio" id="fast" name="runtime">
@@ -45,43 +47,52 @@
 
 </div>
 
-{% comment %} 추천 런드리 무비 {% endcomment %}
-<div>
-  <h1>추천 런드리무비</h1>
-  <div class="show_movies">
 
+<br>
+<br>
+<br>
+
+
+{% comment %} 추천 런드리 무비 {% endcomment %}
+<h1 class="text-center">추천 런드리무비</h1>
+
+<div class="show_movies d-flex justify-content-center">
+  
+  <div class="row mx-auto">
+    {% comment %}  highscore_serializer 이거를 바꿔야 함 어떻게???? {% endcomment %}
+    {% for movies in highscore_serializer %}
+    <div class="mb-2 col-12 col-sm-6 col-md-4 col-lg-3">
+      <img src="https://image.tmdb.org/t/p/w500/{{ movies.poster_path }}" class="img-fluid">
+    </div>
+    {% endfor %}
   </div>
 </div>
+
 {% endblock content %}
 {% block script %}
 <script>
-  const forms = document.querySelectorAll('#select-form')
-  forms.addEventListener('submit', function (event) {
-    event.preventDefault()
+  let print_movies = document.querySelector('#show_movies')
+
+  document.addEventListener('input', (e) => {
+    e.preventDefault()
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
     axios({
-      method: 'post',
+      method:'post',
       headers: {'X-CSRFToken': csrftoken},
-      url: `http://127.0.0.1:8000/movies/selected`,
+      url: `http://127.0.0.1:8000/movies/allmovie/`,
     })
-      .then(response => {
-        if (color === 'white') {
-          console.log(white_movie_serializer)
-        } else if (color === 'black') {
+      .then(res => {
 
-        } else if (color === 'other') {
-
-        }
-
-        if (runtime === 'fast') {
-
-        } else if (runtime === 'normal') {
-
-        } else if (runtime === 'slow') {
-
+        if (e.target.getAttribute('name') == 'color') {
+          let color_movie = e.target.getAttribute('id')
+    
+          if (color_movie === 'white') {
+            console.log(res.data.white_movie_serializer)
+          }
         }
       })
+    
   })
   
 </script>
