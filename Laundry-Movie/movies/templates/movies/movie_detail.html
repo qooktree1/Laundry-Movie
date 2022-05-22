@@ -28,9 +28,13 @@
   </div>
 
 </div>
-<iframe width="900rem" height="500rem"src="https://www.youtube.com/embed/{{ movie.0.video_path }}" frameborder="0"></iframe>
 
+<div class="mt-4">
+  <h1>예고편</h1>
+  <iframe width="900rem" height="500rem"src="https://www.youtube.com/embed/{{ movie.0.video_path }}" frameborder="0"></iframe>
+</div>
 
+<h1 class="mt-5">관련 영화</h1>
 <div class="d-flex">
   {% for same_movie in same_genres %}
   <div class="card" style="max-width: 18rem">
@@ -41,7 +45,7 @@
 
 
 
-{% comment %} 리뷰 쓰기!!! {% endcomment %}
+{% comment %} 리뷰 쓰기!!! -> 버튼 눌렀을 시 community create로 이동 {% endcomment %}
 <div class="d-flex justify-content-end mt-3">
   <button type="button" class="btn btn-primary">리뷰 쓰기</button>
 </div>
