@@ -11,6 +11,6 @@ urlpatterns = [
     path('search-result/', views.search_result, name='search_result'),
     
     path('allmovie/', views.movie_list, name='movie_list'),
-    path('selected/<int:movie_pk>', views.movie_detail, name='movie_detail'),
+    path('movie_selected/<int:movie_pk>', views.movie_detail, name='movie_detail'),
     
 ]   
