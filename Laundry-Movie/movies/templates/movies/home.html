@@ -82,18 +82,38 @@
 </div>
 
 
-<table class="table table-hover mt-5">
-  <tr>
-    <th>
-      s
-    </th>
-    <td>1</td>
-    <td>2</td>
-    <td>3</td>
-  </tr>
-  <tr><td>d</td></tr>
-  <tr><td>g</td></tr>
-</table>
+{% comment %} 게시판!!! {% endcomment %}
+
+<div style="height:280px;">
+  <table class="board">
+      <thead>
+          <tr class="header">
+              <th style="width:10%;">순번</th>
+              <th style="width:60%">제목</th>
+              <th style="width:30%">작성일자</th>
+          </tr>
+      </thead>
+      <tbody>
+      {% if reviews %}
+          {% for data in reviews %}
+          <tr>
+              <td style="text-align:center;">{{ forloop.counter }}</td>
+              <td>
+                  <a href="">
+                      {{ data.title }}
+                  </a>
+              </td>
+              <td>{{ data.created_at|date:'Y-m-d' }}</td>
+          </tr>
+          {% endfor %}
+      {% else %}
+          <tr>
+              <td>작성된 게시글이 없습니다.</td>
+          </tr>
+      {% endif %}
+      </tbody>
+  </table>
+</div>
 
 {% endblock content %}
 {% block script %}
