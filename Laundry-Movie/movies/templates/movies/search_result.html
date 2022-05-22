@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block style %}
+{% endblock style %}
+
+{% block content %}
+
+<h1>검색결과</h1>
+<h2>{{ movies | length }}건의 검색 결과가 있습니다.</h2>
+<div class="d-flex">
+  {% for movie in movies %}
+  
+  <div class="card" style="max-width: 18rem">
+    <a href="{% url 'movies:movie_detail' movie.id %}"><img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"></a>
+    {{ movie.title }}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

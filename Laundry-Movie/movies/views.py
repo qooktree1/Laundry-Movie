@@ -7,6 +7,7 @@ from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import get_list_or_404, render
 from .models import Movie, Genre
 from .serializers import GenreSerializer, MovieDetailSerializer, MovieSerializer
+from django.db.models import Q
 
 
 
@@ -140,3 +141,13 @@ def movie_detail(request, movie_pk):
     }
     return render(request, 'movies/movie_detail.html', context)
     return Response(context)
+
+
+def search_result(request):
+    keyword = request.GET.get('keyword')
+    
+    movies = Movie.objects.filter( Q(title__icontains=keyword) | Q(overview__icontains=keyword ))
+    context = {
+        'movies': movies,
+    }
+    return render(request, 'movies/search_result.html', context)
