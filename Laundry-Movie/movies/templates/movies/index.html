@@ -14,7 +14,7 @@
     <nav class="navbar navbar-expand-sm">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="{% static 'LOGO.png'%}" alt="logo_img" style="width:340px;">
+          <img href="{% url 'movies:index' %}" src="{% static 'LOGO.png'%}" alt="logo_img" style="width:340px;">
         </a>
 
         <div class="">
@@ -40,26 +40,28 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="loginModalLabal">Login</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- 우상단 x버튼 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
           </div>
           <div class="modal-body">
-            <form>
+
+            {% comment %} form 시작 {% endcomment %}
+            <form action="{% url 'accounts:login' %}" method="POST">
+              {% csrf_token %}
 
               <div class="mb-3">
-                <label for="email" class="col-form-label">Email</label>
-                <input class="form-control" type="text" id="email" name="email" placeholder="abcd@gmail.com">
+                <label for="username" class="col-form-label">username</label>
+                <input class="form-control" type="text" id="username" name="username">
               </div>
 
               <div class="mb-3">
                 <label for="password" class="col-form-label">Password</label>
                 <input class="form-control" type="password" id="password" name="password">
               </div>
-
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">로그인</button>
+                <button type="button" class="btn btn-secondary ms-1"  data-bs-dismiss="modal" aria-label="Close">취소</button>
+              </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">로그인</button>
           </div>
         </div>
       </div>
@@ -71,31 +73,35 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="SignUpModalLabal">SignUp</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form>
+            
+            {% comment %} form 시작 {% endcomment %}
+            <form action="{% url 'accounts:signup' %}" method="POST">
+              {% csrf_token %}
 
               <div class="mb-3">
-                <label for="email" class="col-form-label">Email</label>
-                <input class="form-control" type="text" id="email" name="email" placeholder="abcd@gmail.com">
+                <label for="username" class="col-form-label">Username</label>
+                <input class="form-control" type="text" id="username" name="username">
               </div>
 
               <div class="mb-3">
-                <label for="password" class="col-form-label">Password</label>
-                <input class="form-control" type="password" id="password" name="password">
+                <label for="password1" class="col-form-label">Password</label>
+                <input class="form-control" type="password" id="password1" name="password1">
               </div>
 
               <div class="mb-3">
-                <label for="password-confirm" class="col-form-label">Password Confirm</label>
-                <input class="form-control" type="password" id="password-confirm" name="password-confirm">
+                <label for="password2" class="col-form-label">Password Confirm</label>
+                <input class="form-control" type="password" id="password2" name="password2">
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">회원가입</button>
+                <button type="button" class="btn btn-secondary ms-1"  data-bs-dismiss="modal" aria-label="Close">취소</button>
               </div>
 
             </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">회원가입</button>
           </div>
         </div>
       </div>
