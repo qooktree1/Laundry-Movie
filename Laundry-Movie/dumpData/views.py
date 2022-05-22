@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from movies.models import Movie, Genre
 from movies.serializers import GenreSerializer
 import requests, json
+import logging, traceback
 
 API_KEY = '11006c90d072cfdcbfb249d25eb8f5ee'
 BASE_URL = "https://api.themoviedb.org/3"
@@ -15,7 +16,11 @@ def genre_data(request):
     data = res.json()['genres']
     serializer = GenreSerializer(data=data, many=True)
 
-    serializer.is_valid(raise_exception=True)
+    
+    # try:
+    #    serializer.is_valid(raise_exception=True)
+    # except:
+    #    logging.error(traceback.format_exc())
 
     if serializer.is_valid():
         serializer.save()
@@ -33,7 +38,7 @@ def movie_data(request):
 
     # 영화 개수 1페이지당 20개
     # 원래 1, 21    
-    for page in range(1, 3):
+    for page in range(1, 51):
         res = requests.get(link+str(page))
         data_list = res.json()['results']
 
@@ -50,14 +55,15 @@ def movie_data(request):
             vote_average = data.get('vote_average')
             overview = data.get('overview')
             poster_path = data.get('poster_path')
-            release_date = data.get('release_date')
             runtime = data.get('runtime')
+
+            # 여기 수정해야 할 것 같습니다!!!
             try:
                 video_path = data.get('videos').get('results')[0].get('key')
+                release_date = data.get('release_date')
+                if not release_date:
+                    continue
             except:
-                continue
-
-            if not runtime or not release_date:
                 continue
 
             movie = Movie.objects.create(id = movie_id, 

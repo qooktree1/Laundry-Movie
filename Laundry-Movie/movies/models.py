@@ -4,6 +4,7 @@ class Genre(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
 
+
 class Movie(models.Model):
     id = models.IntegerField(primary_key=True)
     genres = models.ManyToManyField(Genre, related_name="genre")

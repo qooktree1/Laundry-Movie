@@ -18,7 +18,7 @@
 {% endblock style %}
 
 {% block content %}
-<div class="mt-5">
+<div class="mt-5 container">
 
   <div class="text-center">
     <h1>어떤 빨래를 하시나요?</h1>
@@ -73,39 +73,35 @@
 
 {% comment %} 추천 런드리 무비 {% endcomment %}
 
-<h1 class="text-center mb-5">추천 런드리무비</h1>  
+<div class="">
+  <h1 class="text-center mb-5">추천 런드리무비</h1>  
 
-<div class="" id="show-movies">
-  <div class="row mx-auto" id="create-or-delete">
-  {% for movie in highscore_serializer %}
-    <div class="mb-4 col-6 col-sm-6 col-md-4 col-lg-3">
+  <div class="" id="show-movies">
+    <div class="row mx-auto" id="create-or-delete">
+    {% for movie in highscore_serializer %}
+      <div class="mb-4 col-6 col-sm-6 col-md-4 col-lg-3">
 
-      <div class="card" style="">
-        
-        <a class="" href="{% url 'movies:movie_detail' movie.id %}"><img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"></a>
+        <div class="card" style="">
+          
+          <a class="" href="{% url 'movies:movie_detail' movie.id %}"><img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"></a>
+          {{ movie.title }}
+        </div>
+
       </div>
-
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
 </div>
-
 {% endblock content %}
 {% block script %}
 <script>
-  // 검색창에 검색했을때의 조건을 if문 안에 적으시오!!!!!!
-  if (false) {
-
-  }
-  // 검색했을 경우에 ~~ 에 대한 검색 결과입니다. 라는 페이지를 보여줘야한다. 이에 대한 구상...
-  
-
-  else {
-
     let colorBtns = document.querySelectorAll('input[name="color"]')
     let runtimeBtns = document.querySelectorAll('input[name="runtime"]')
+    
 
-    document.addEventListener('input', (e) => {
+    document.addEventListener('input', e => {
+      e.preventDefault()
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
       let selectedColor
       let selectedRuntime
@@ -122,11 +118,8 @@
           break
         }
       }
-      let color = selectedColor
-      let runtime = selectedRuntime
-      
-      e.preventDefault()
-      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+      const color = selectedColor
+      const runtime = selectedRuntime
 
       let getTarget = e.target.getAttribute('name')
       
@@ -153,72 +146,78 @@
             obj.appendChild(newDiv)
 
             let movies
+            
             // 문제 : 색상 선택 후 모드 선택 및 수정 시 정상작동 -> 이후 두 라디오 버튼이 선택된 상태에서 색상을 수정하면 결과가 변동되지 않음
             // 값은 제대로 들어오는 것 같은데 구현이 안됨 -> 모드를 먼저 누르고 색상누르면 작동 안됨
             // 해결방안 1: 선택 후 전송하는 버튼을 따로 만들어서 버튼을 누를 때 받은 값으로 알고리즘 작동시키기
             // 해결방안 2: getTarget이라는 변수 안에 들어오는 정보의 순서에 따라서 if문에 다르게 돌도록함
+
+            // 문제 2 : 알고리즘 적용 시 시간이 맞지 않은 현상 발견 -> 빠름 누르고 색상 누르면 100 초과의 영화들이 보여진다. 러닝타임이 맞지 않은 영화들이 보여진다.
             
-            if (color && runtime && getTarget === 'runtime') {
-              console.log(color, runtime)
-              console.log(runtime, color)
-              
-              if (runtime === 'long' && color === 'white') { movies = res.data.white_movie_serializer && res.data.long_movie_serializer }
-              else if (runtime === 'normal' && color === 'white') { movies = res.data.white_movie_serializer && res.data.normal_movie_serializer }
-              else if (runtime === 'short' && color === 'white') { movies = res.data.white_movie_serializer && res.data.short_movie_serializer }
-              else if (runtime === 'long' && color === 'black') { movies = res.data.black_movie_serializer && res.data.long_movie_serializer }
-              else if (runtime === 'normal' && color === 'black') { movies = res.data.black_movie_serializer && res.data.normal_movie_serializer }
-              else if (runtime === 'short' && color === 'black') { movies = res.data.black_movie_serializer && res.data.short_movie_serializer }
-              else if (runtime === 'long' && color === 'other') { movies = res.data.other_movie_serializer && res.data.long_movie_serializer }
-              else if (runtime === 'normal' && color === 'other') { movies = res.data.other_movie_serializer && res.data.normal_movie_serializer }
-              else if (runtime === 'short' && color === 'other') { movies = res.data.other_movie_serializer && res.data.short_movie_serializer }
-              
-            }
-            if (runtime && color && getTarget === 'color') {
-              if (color === 'white' && runtime === 'long') { movies = res.data.long_movie_serializer && res.data.white_movie_serializer }
-              else if (color === 'white' && runtime === 'normal') { movies = res.data.normal_movie_serializer && res.data.white_movie_serializer }
-              else if (color === 'white' && runtime === 'short') { movies = res.data.short_movie_serializer && res.data.white_movie_serializer }
-              else if (color === 'black' && runtime === 'long') { movies = res.data.long_movie_serializer && res.data.black_movie_serializer }
-              else if (color === 'black' && runtime === 'normal') { movies = res.data.normal_movie_serializer && res.data.black_movie_serializer }
-              else if (color === 'black' && runtime === 'short') { movies = res.data.short_movie_serializer && res.data.black_movie_serializer }
-              else if (color === 'other' && runtime === 'long') { movies = res.data.long_movie_serializer && res.data.other_movie_serializer }
-              else if (color === 'other' && runtime === 'normal') { movies = res.data.normal_movie_serializer && res.data.other_movie_serializer }
-              else if (color === 'other' && runtime === 'short') { movies = res.data.short_movie_serializer && res.data.other_movie_serializer }
-            }
+            const white = res.data.white_movie_serializer
+            const black = res.data.black_movie_serializer
+            const other = res.data.other_movie_serializer
+            const long = res.data.long_movie_serializer
+            const normal = res.data.normal_movie_serializer
+            const short = res.data.short_movie_serializer
+
+            const white_long = res.data.white_long
+            const white_normal = res.data.white_normal
+            const white_short = res.data.white_short
             
-            // 1 개만 선택했을 시
+            const black_long = res.data.black_long
+            const black_normal = res.data.black_normal
+            const black_short = res.data.black_short
+            
+            const other_long = res.data.other_long
+            const other_normal = res.data.other_normal
+            const other_short = res.data.other_short
+            
+            // 다중 선택 시
+            if (color !== undefined && runtime !== undefined) {
+              if (runtime === 'long' && color === 'white') { movies = white_long }
+              else if (runtime === 'normal' && color === 'white') { movies = white_normal }
+              else if (runtime === 'short' && color === 'white') { movies = white_short }
+              else if (runtime === 'long' && color === 'black') {  movies = black_long }
+              else if (runtime === 'normal' && color === 'black') { movies = black_normal }
+              else if (runtime === 'short' && color === 'black') { movies = black_short }
+              else if (runtime === 'long' && color === 'other') { movies = other_long }
+              else if (runtime === 'normal' && color === 'other') { movies = other_normal }
+              else if (runtime === 'short' && color === 'other') { movies = other_short }
+            }
+            // 1 개만 선택했을 시 - 완료
             else {
-              if (color === 'white' && !runtime) { movies = res.data.white_movie_serializer }
-              else if (color === 'black' && !runtime) { movies = res.data.black_movie_serializer }
-              else if (color === 'other' && !runtime) { movies = res.data.other_movie_serializer }
-              else if (!color && runtime === 'long') { movies = res.data.long_movie_serializer }
-              else if (!color && runtime === 'normal') { movies = res.data.normal_movie_serializer }
-              else if (!color && runtime === 'short') { movies = res.data.short_movie_serializer }
+              if (color === 'white') { movies = white }
+              else if (color === 'black') { movies = black }
+              else if (color === 'other') { movies = other }
+              else if (runtime === 'long') { movies = long }
+              else if (runtime === 'normal') { movies = normal }
+              else if (runtime === 'short') { movies = short }
             }
 
 
+            movies.forEach( movie => {
+            let div1 = document.createElement('div')
+            let div2 = document.createElement('div')
+            div1.setAttribute('class', 'mb-4 col-6 col-sm-6 col-md-4 col-lg-3')
+            div2.setAttribute('class', 'card')
+            newDiv.appendChild(div1)
+            div1.appendChild(div2)
 
-            
-              movies.forEach( movie => {
-              let div1 = document.createElement('div')
-              let div2 = document.createElement('div')
-              div1.setAttribute('class', 'mb-4 col-6 col-sm-6 col-md-4 col-lg-3')
-              div2.setAttribute('class', 'card')
-              newDiv.appendChild(div1)
-              div1.appendChild(div2)
+            let a = document.createElement('a')
+            let img = document.createElement('img')
+            div2.appendChild(a)
 
-              let a = document.createElement('a')
-              let img = document.createElement('img')
-              div2.appendChild(a)
-              a.appendChild(img)
-              img.setAttribute('class', 'selected-movie img-fluid card-img-top')
-              img.setAttribute('src', `https://image.tmdb.org/t/p/w500/${movie.poster_path}`)
-              })
+            a.setAttribute('href', `http://127.0.0.1:8000/movies/movie_selected/${movie.id}`)
+            a.appendChild(img)
+            img.setAttribute('class', 'selected-movie img-fluid card-img-top')
+            img.setAttribute('src', `https://image.tmdb.org/t/p/w500/${movie.poster_path}`)
+            })
 
           })
           }
       
     })
-}
   
 </script>
 {% endblock script %}
