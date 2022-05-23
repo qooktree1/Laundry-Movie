@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 
@@ -150,6 +151,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# 프로필 이미지를 위한 미디어
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

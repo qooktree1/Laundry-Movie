@@ -4,20 +4,19 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.views.decorators.http import require_GET, require_POST
-from django.shortcuts import get_list_or_404, render
+from django.shortcuts import get_list_or_404, render, redirect
 from .models import Movie, Genre
 from community.models import Review
 from .serializers import GenreSerializer, MovieDetailSerializer, MovieSerializer
 from django.db.models import Q
-
-# 장고 페이지네이션
-from django.core.paginator import Paginator
-
+from django.contrib.auth import get_user_model
 
 
 @require_safe
 def index(request):
-    return render(request, 'movies/index.html')
+    if not request.user.is_authenticated:
+        return render(request, 'movies/index.html')
+    return redirect('movies:home')
 
 
 @require_safe
@@ -26,14 +25,10 @@ def home(request):
     highscore_serializer = MovieSerializer(data=highscore_movies, many=True)
     highscore_serializer.is_valid()
     reviews = Review.objects.order_by('-pk')
-    page = request.GET.get('page', '1')
-    paginator = Paginator(reviews, '10') # Paginator(분할할 객체, 페이지 당 담길 객체 수)
-    page_object = paginator.page(page)  # 페이지 번호 받아서 해당 페이지 리턴
 
     context = {
         'highscore_serializer': highscore_serializer.data,
         'reviews': reviews,
-        'pages' : page_object,
     }
     return render(request, 'movies/home.html', context)
 

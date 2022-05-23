@@ -2,22 +2,13 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404, redirec
 from .models import Review, Comment
 from movies.models import Movie
 from .forms import ReviewForm, CommentForm
-from rest_framework.decorators import api_view
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
 
-from django.views.decorators.http import require_GET,require_POST, require_http_methods
-
-# 장고 페이지네이션
-from django.core.paginator import Paginator
-
-@api_view(['GET'])
+@require_GET
 def review_list(request):
     reviews = Review.objects.order_by('-pk')
-    page = request.GET.get('page', '1')
-    paginator = Paginator(reviews, '10') # Paginator(분할할 객체, 페이지 당 담길 객체 수)
-    page_object = paginator.page(page)  # 페이지 번호 받아서 해당 페이지 리턴
     context = {
         'reviews': reviews,
-        'pages' : page_object,
     }
     return render(request, 'community/review_page.html', context)
 
@@ -105,16 +96,21 @@ def delete_comment(request, comment_pk):
 # 리뷰 수정
 @require_http_methods(['GET', 'POST'])
 def update_review(request, review_pk):
-    review = Review.objects.get(pk=review_pk)
-    if request.method == 'POST':
-        form = ReviewForm(request.POST, instance=review)
-        if form.is_valid():
-            form.save()
-            return redirect('community:detail_review', review_pk)
+    review = get_object_or_404(Review, pk=review_pk)
+    if request.user == review.user:
+        if request.method == 'POST':
+            form = ReviewForm(request.POST, instance=review)
+            if form.is_valid():
+                review = form.save(commit=False)
+                review.user = request.user
+                review.save()
+                return redirect('community:detail_review', review_pk)
+        else:
+            form = ReviewForm(instance=review)
+        context = {
+            'form': form,
+            'review': review,
+        }
+        return render(request, 'community/review_update.html', context)
     else:
-        form = ReviewForm(instance=review)
-    context = {
-        'form': form,
-        'review': review,
-    }
-    return render(request, 'community/review_update.html', context)
+        return redirect('community:detail_review', review_pk)

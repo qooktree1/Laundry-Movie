@@ -2,20 +2,20 @@ from audioop import reverse
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from .models import User
-from rest_framework import status
-from .forms import CustomUserCreationForm, LoginForm
+from .models import User, Profile
+
+from .forms import CustomUserCreationForm, LoginForm, ProfileForm
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
+
 from .serializers import ProfileSerializer
-from django.contrib import messages
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST, require_http_methods
+from django.views.decorators.http import require_POST, require_http_methods, require_safe
 
 from community.models import Review, Comment
 
@@ -23,12 +23,13 @@ from community.models import Review, Comment
 #    return render(request, 'movies/home.html')
 
 
-@api_view(['GET'])
-def profile(request, username):
-    user = get_object_or_404(get_user_model(), username=username)
-    profile_serializer = ProfileSerializer(user)
-    
-    return Response(profile_serializer.data)
+@require_safe
+def people(request, username):
+    person = get_object_or_404(get_user_model(), username=username)
+    context = {
+        'person': person,
+    }
+    return render(request, 'accounts/people.html', context)
 
 
 '''
@@ -75,10 +76,20 @@ def logout(request):
 
 
 @login_required
+@api_view(['GET', 'POST'])
+@require_http_methods(['GET', 'POST'])
 def profile(request, username):
     user = get_object_or_404(get_user_model(), username=username)
+    if request.method == 'POST':
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('accounts:people', user.username)
+        return redirect('accounts:profile')
+    else:
+        profile = Profile.objects.get(user=request.user)
+        profile_form = ProfileForm(instance=profile)
     context = {
-        'user': user,
+        'profile_form': profile_form,
     }
-    return render(request, 'accounts/profile.html', context)
-
+    return render(request, 'accounts/profile.html',context)

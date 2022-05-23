@@ -68,6 +68,13 @@
           <p class="fs-5 text-muted card-text mb-4">줄거리</p>
           <p class="card-text">{{ movie.0.overview}}</p>
         </div>
+
+        {% comment %} 리뷰 쓰기!!! -> 버튼 눌렀을 시 community create로 이동 {% endcomment %}
+        <div class="mb-2 mx-auto ms-3">
+          <a href="{% url 'community:create_review' movie.0.id %}" type="button" class="btn btn-secondary">리뷰 쓰기</a>
+        </div>
+
+
       </div>
     </div>
   </div>
@@ -87,10 +94,7 @@
 
 
 
-  {% comment %} 리뷰 쓰기!!! -> 버튼 눌렀을 시 community create로 이동 {% endcomment %}
-  <div class="d-flex justify-content-end mt-3">
-    <a href="{% url 'community:create_review' movie.0.id %}" type="button" class="btn btn-primary">리뷰 쓰기</a>
-  </div>
+  
 </div>
 {% endblock content %}
 {% block script %}

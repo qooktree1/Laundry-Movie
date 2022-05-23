@@ -1,46 +1,27 @@
 {% extends 'base.html' %}
 {% block style %}
 <style>
-  .menu-links-1, .menu-links-2, .menu-links-3, .menu-links-4{
-    color: black;
+  #image-clear_id {
+    display:none;
+  }
+  label {
+    display:none;
   }
 </style>
 {% endblock style %}
 {% block content %}
-
-{% comment %} 전체 {% endcomment %}
-<div class="container">
-
-
-{{ comments.content|length }}   {% comment %} 왜 안나올까??? {% endcomment %}
-{{ profile_serializer.pk }}
-
-
-  {% comment %} 사진 {% endcomment %}
-  <div>
-    
-  </div>
-
-
-  {% comment %}  런드리 무비 {% endcomment %}
-  <h3>{{ user.username }}님의 런드리무비</h3>
-  <div>
-    {{ user.pk}}
-  </div>
-
-
-
-
-  {% comment %} 댓글 {% endcomment %}
-  <h3>{{ user.username }}님이 작성한 댓글</h3>
-  <div>
-
-  </div>
-</div>
-
-
-<h1>{{user.username}}</h1>
-{% endblock content %}
-
-{% block script %}
-{% endblock script %}
+    <h1 class="text-center mt-5">프로필 사진 변경</h1>
+    <div class="d-flex justify-content-center flex-column align-items-center">
+        <p> 프로필 사진을 변경하려면 파일 선택 후 수정을 누르세요.</p>
+        <form class="" method="POST" enctype="multipart/form-data">
+        <!-- 파일을 업로드할 때 form method는 POST여야하고 enctype을 multipart/form-data로 설정해야 한다. -->
+            {% csrf_token %}
+            {{ profile_form }}
+            <br>
+            <div class="my-3">
+                <button type="submit" class="btn btn-primary">수정</button>
+                <button type="cancel" class="btn btn-secondary">취소</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
