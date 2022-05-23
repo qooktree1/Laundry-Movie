@@ -1,5 +1,40 @@
 {% extends 'base.html' %}
+{% block style %}
+{% endblock style %}
 
 {% block content %}
+
+{% comment %} 전체 {% endcomment %}
+<div class="container">
+
+
+
+
+
+  {% comment %} 사진 {% endcomment %}
+  <div>
+
+  </div>
+
+
+  {% comment %}  런드리 무비 {% endcomment %}
+  <h3>{{ user.username }}님의 런드리무비</h3>
+  <div>
+    {{ user.}}
+  </div>
+
+
+
+
+  {% comment %} 댓글 {% endcomment %}
+  <h3>{{ user.username }}님이 작성한 댓글</h3>
+  <div>
+
+  </div>
+</div>
+
+
 <h1>{{user.username}}</h1>
 {% endblock content %}
+{% block script %}
+{% endblock script %}

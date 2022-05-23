@@ -9,9 +9,11 @@
     }
     .selected-movie{
       transition: all 0.2s linear;
+      z-index:1;
     }
     .selected-movie:hover{
-      transform: scale(1.08);
+      transform: scale(1.3);
+      z-index:2;
     }
 
 </style>
@@ -75,23 +77,17 @@
 
 <div class="">
   <h1 class="text-center mb-5">추천 런드리무비</h1>  
-
   <div class="" id="show-movies">
     <div class="row mx-auto" id="create-or-delete">
     {% for movie in highscore_serializer %}
       <div class="mb-4 col-6 col-sm-6 col-md-4 col-lg-3">
-
-        <div class="card" style="">
-          
-          <a class="" href="{% url 'movies:movie_detail' movie.id %}"><img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"></a>
-          {{ movie.title }}
-        </div>
-
+        <a href="{% url 'movies:movie_detail' movie.id %}"><img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"></a>
       </div>
-      {% endfor %}
+    {% endfor %}
     </div>
   </div>
 </div>
+
 {% endblock content %}
 {% block script %}
 <script>
@@ -198,15 +194,12 @@
 
             movies.forEach( movie => {
             let div1 = document.createElement('div')
-            let div2 = document.createElement('div')
             div1.setAttribute('class', 'mb-4 col-6 col-sm-6 col-md-4 col-lg-3')
-            div2.setAttribute('class', 'card')
             newDiv.appendChild(div1)
-            div1.appendChild(div2)
 
             let a = document.createElement('a')
             let img = document.createElement('img')
-            div2.appendChild(a)
+            div1.appendChild(a)
 
             a.setAttribute('href', `http://127.0.0.1:8000/movies/movie_selected/${movie.id}`)
             a.appendChild(img)

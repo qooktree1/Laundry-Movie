@@ -5,115 +5,131 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>Document</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'LOGO.png' %}">
+  <title>Laundry - Movie</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inconsolata&display=swap');
     *{
       font-family: 'Amatic SC', cursive;
       font-family: 'Inconsolata', monospace;
     }
+
+    @media screen and (min-width: 992px){
+      .outside-collapse{
+        display: flex;
+        justify-content: space-between;
+      }
+      .inner-collapse-1{
+        display: flex;
+      }
+
+    }
   </style>
   {% block style %}
   {% endblock style %}
 </head>
 <body>
-  <div class="container">
-    {% comment %} NavBar {% endcomment %}
 
+  <div class="container">
     
-    
-    
+    {% comment %} Logo {% endcomment %}
+    <div class="text-center my-3">
+      <a class="navbar-brand" href="{% url 'movies:home' %}">
+        <img class="mx-auto img-fluid" src="{% static 'LOGO.png'%}" alt="logo_img" style="max-height:50px;">
+      </a>
+    </div>
+
+    {% comment %} Navbar {% endcomment %}
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        {% comment %} container-fluid 클래스에서 뺌 {% endcomment %}
+        <div class="collapse navbar-collapse outside-collapse" id="navbarCollapse">
 
-      <a href="{% url 'movies:home' %}">
-        <img class="navbar-brand mx-auto img-fluid d-block" src="{% static 'LOGO.png'%}" alt="logo_img" style="width:340px;">
-      </a>
-      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      {% comment %} container-fluid 클래스에서 뺌 {% endcomment %}
-        <div class="collapse navbar-collapse  d-flex justify-content-between" id="navbarCollapse">
-
-          {% comment %} 메뉴들 {% endcomment %}
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active fs-5" aria-current="page" href="{% url 'movies:home' %}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fs-5" href="{% url 'movies:selected' %}">추천모드</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fs-5" href="{% url 'community:reviews' %}">세탁후기</a>
-            </li>
-            <li class="nav-item">
-              
-              <a class="nav-link fs-5" href="{% url 'movies:tips' %}">세탁TIP</a>
-            </li>
-          </ul>
-
-          {% comment %} 질문하기 {% endcomment %}
-          <form class="d-flex" role="search" action="{% url 'movies:search_result' %}" method="GET">
-            {% csrf_token %}
-            <input class="form-control me-2" type="search" placeholder="search" aria-label="search" name="keyword">
-            <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-          </form>
-
-          {% comment %} User 창 {% endcomment %}
-          
-          
-          <div class="dropdown">
-            <button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-user"></i>
-              {{ user.username }}
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="{% url 'accounts:profile' user.username %}">Profile</a></li>
-              <li>
-                <form action="{% url 'accounts:logout' %}" method="POST">
-                  {% csrf_token %}
-                  <input type="submit" class="dropdown-item" value="Logout">
-                </form>
+          <div class="">
+            {% comment %} 메뉴들 {% endcomment %}
+            <ul class="navbar-nav me-audo mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active fs-5" aria-current="page" href="{% url 'movies:home' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs-5" href="{% url 'movies:selected' %}">추천모드</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs-5" href="{% url 'community:reviews' %}">세탁후기</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs-5" href="{% url 'movies:tips' %}">세탁TIP</a>
               </li>
             </ul>
+          </div>
+
+          <div class="inner-collapse-1">
+            {% comment %} 질문하기 {% endcomment %}
+            <form class="d-flex me-5" role="search" action="{% url 'movies:search_result' %}" method="GET">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" placeholder="제목 | 내용 | 장르" aria-label="search" name="keyword">
+              <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+
+            {% comment %} User 창 {% endcomment %}
+            <div class="dropdown">
+              <button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-user"></i>
+                {{ user.username }}
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{% url 'accounts:profile' user.username %}">Profile</a></li>
+                <li>
+                  <form action="{% url 'accounts:logout' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" class="dropdown-item" value="Logout">
+                  </form>
+                </li>
+              </ul>
+            </div>
           </div>
 
 
         </div>
       </div>
     </nav>
+    
+
+
+
+  
     {% block content %}
     {% endblock content %}
 
     {% comment %} Footer {% endcomment %}
-  
-  <div class="footer">
-    <div class="container-fluid text-center text-md-left footer-container">
-      <div class="container p-4">
+    <div class="footer">
+      <div class="container-fluid text-center text-md-left footer-container">
+        <div class="container p-4">
 
-        <a href="#">
-          <img class="mx-auto d-block" src="{% static 'footer_logo.png'%}" alt="logo_img" style="width:340px;">
-        </a>
+          <a href="#">
+            <img class="img-fluid" src="{% static 'footer_logo.png'%}" alt="logo_img" style="max-height:50px;">
+          </a>
 
-        <div class="row d-flex justify-content-center">
-          <div class="d-flex justify-content-center mt-3">
-            <a class="text-decoration-none text-reset" href="https://github.com/Binzify"><h5 class="me-3"><strong>임상빈 | github.com/Binzify</strong></h5></a>
-            <a class="text-decoration-none text-reset" href="https://github.com/qooktree1"><h5><strong>박종민 | github.com/qooktree1</strong></h5></a>
+          <div class="row d-flex justify-content-center">
+            <div class="d-flex justify-content-center mt-3">
+              <a class="text-decoration-none text-reset" href="https://github.com/Binzify"><h5 class="me-3"><strong>임상빈 | github.com/Binzify</strong></h5></a>
+              <a class="text-decoration-none text-reset" href="https://github.com/qooktree1"><h5><strong>박종민 | github.com/qooktree1</strong></h5></a>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="text-center p-3">
-        <strong><a class="text-decoration-none text-dark" href="https://www.instagram.com/harry_jjun/">© SSAFY 7th. The King of Trex</a></strong>
+        <div class="text-center p-3">
+          <strong><a class="text-decoration-none text-dark" href="https://www.instagram.com/harry_jjun/">© SSAFY 7th. The King of Trex</a></strong>
+        </div>
       </div>
     </div>
-  </div>
-
   {% comment %} Script 코드 - 부트스트랩, Axios, Fontawesome {% endcomment %}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://kit.fontawesome.com/8591a8f1c6.js" crossorigin="anonymous"></script>
+</div>
 </body>
 
 {% block script %}

@@ -1,11 +1,10 @@
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from .models import Review, Comment
 from movies.models import Movie
-from .serializers import ReviewSerializer, CommentSerializer, ReviewListSerializer
-
-from rest_framework import status
-from rest_framework.response import Response
+from .forms import ReviewForm, CommentForm
 from rest_framework.decorators import api_view
+
+from django.views.decorators.http import require_GET,require_POST, require_http_methods
 
 # 장고 페이지네이션
 from django.core.paginator import Paginator
@@ -22,50 +21,82 @@ def review_list(request):
     }
     return render(request, 'community/review_page.html', context)
 
-@api_view(['POST'])
-def create_review(request):
-        serializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-'''
-detail에서 review delete 요청이 오면 삭제되도록 함
-@api_view(['delete'])
-def delete_review(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    if request.user.pk == review.user.pk:
-        review.delete()
-        data = {
-            'delete': f'{review_pk}번 리뷰가 삭제되었습니다.'
-        }
-        return Response(data,status=status.HTTP_204_NO_CONTENT)
-    return Response(status=status.HTTP_401_UNAUTHORIZED)
-'''
-'''
-model이랑 serializer 부터 다시 해봐야할듯
-drf로 정보 보내서 게시글 작성될 수 있도록 하기
-영화 리뷰인데 어떠한 영화인지 확인할 수 있게 str 표현해두기
-아...모르겠다 진짜 머리가 꼬이는중입니다...
-'''
+# @api_view(['POST'])
+# def create_review(request):
+#     serializer = ReviewSerializer(data=request.data)
+#     if serializer.is_valid(raise_exception=True):
+#         serializer.save()
+#         return render(request, 'community/review_create.html')
 
-@api_view(['GET', 'DELETE', 'PUT'])
+@require_http_methods(['GET', 'POST'])
+def create_review(request, movie_pk):
+    movie = Movie.objects.filter(pk=movie_pk)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST) 
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.movie = movie[0] # 추가됨
+            review.save()
+            return redirect('community:reviews')
+    else:
+        form = ReviewForm()
+    context = {
+        'form': form,
+        'movie': movie[0],
+    }
+    return render(request, 'community/review_create.html', context)
+
+
+@require_GET
 def detail_review(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    if request.method == 'GET':
-        serializer = ReviewSerializer(review)
-        return Response(serializer.data)
-    
-    elif request.method == 'DELETE':
+
+    movie = Movie.objects.filter(pk=review.movie_id)
+    comments = review.comment_set.all()
+    comment_form = CommentForm()
+    context = {
+        'review': review,
+        'comment_form': comment_form,
+        'comments': comments,
+        'movie': movie[0],
+    }
+    return render(request, 'community/review_detail.html', context)
+
+@require_POST
+def create_comment(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    comment_form = CommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.review = review
+        comment.user = request.user
+        comment.save()
+        return redirect('community:detail_review', review.pk)
+    context = {
+        'comment_form': comment_form,
+        'review': review,
+        'comments': review.comment_set.all(),
+    }
+    return render(request, 'community/detail_review.html', context)
+
+
+# 리뷰 삭제
+@require_POST
+def delete_review(request, review_pk):
+    review = Review.objects.get(pk=review_pk)
+    if request.method == 'POST':
         review.delete()
-        data = {
-            'delete': f'{review_pk}번 리뷰가 삭제되었습니다.'
-        }
-        return Response(data, status=status.HTTP_204_NO_CONTENT)
-    
-    elif request.method == 'PUT':
-        serializer = ReviewSerializer(review, request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
+        return redirect('community:reviews')
+    return render(request, 'community/detail_review.html', review.pk)
 
 
+# 댓글 삭제
+@require_POST
+def delete_comment(request, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    review = Review.objects.get(pk = comment.review.pk)
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('community:detail_review', review.pk)
+    return render(request, 'coummunity/detail_review.html', review.pk)

@@ -39,7 +39,7 @@ def home(request):
 
 
 def selected(request):
-    highscore_movies = Movie.objects.order_by('-vote_average').prefetch_related('genres')[:50]
+    highscore_movies = Movie.objects.order_by('-vote_average').prefetch_related('genres')[:500]
     highscore_serializer = MovieSerializer(data=highscore_movies, many=True)
     # 유효성 검사
     highscore_serializer.is_valid()
@@ -79,9 +79,9 @@ def movie_list(request):
     long = set()
 
     # movies_same_genre = Movie.objects.filter(genres__id__in=genres).prefetch_related('genres').distinct()[:5]
-    white = Movie.objects.filter(genres__id__in=white_color_movie).prefetch_related('genres').distinct()[:50]
-    black = Movie.objects.filter(genres__id__in=black_color_movie).prefetch_related('genres').distinct()[:50]
-    other = Movie.objects.filter(genres__id__in=other_color_movie).prefetch_related('genres').distinct()[:50]
+    white = Movie.objects.filter(genres__id__in=white_color_movie).prefetch_related('genres').distinct()[:500]
+    black = Movie.objects.filter(genres__id__in=black_color_movie).prefetch_related('genres').distinct()[:500]
+    other = Movie.objects.filter(genres__id__in=other_color_movie).prefetch_related('genres').distinct()[:500]
 
     for movie in highscore_movies:
         if movie.runtime <= 100:  # 100 이하

@@ -9,9 +9,11 @@
     }
     .selected-movie{
       transition: all 0.2s linear;
+      z-index: 1;
     }
     .selected-movie:hover{
-      transform: scale(1.08);
+      transform: scale(1.2);
+      z-index: 2;
     }
 
 </style>
@@ -26,19 +28,23 @@
         <div class="d-flex justify-content-evenly">
           <div class="card" style="width: 18rem;">
             <a href="{% url 'movies:movie_detail' highscore_serializer.0.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.0.poster_path }}" class="card-img-top img-fluid" alt="movie-img1">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.0.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img1">
             </a>
           </div>
           <div class="card" style="width: 18rem;">
             <a href="{% url 'movies:movie_detail' highscore_serializer.1.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.1.poster_path }}" class="card-img-top img-fluid" alt="movie-img2">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.1.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img2">
             </a>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.2.poster_path }}" class="card-img-top img-fluid" alt="movie-img3">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.2.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.2.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img3">
+            </a>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.3.poster_path }}" class="card-img-top img-fluid" alt="movie-img4">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.3.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.3.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img4">
+            </a>
           </div>
         </div>
       </div>
@@ -46,16 +52,24 @@
       <div class="carousel-item">
         <div class="d-flex justify-content-evenly">
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.4.poster_path }}" class="card-img-top img-fluid" alt="movie-img5">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.4.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.4.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img5">
+            </a>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.5.poster_path }}" class="card-img-top img-fluid" alt="movie-img6">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.5.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.5.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img6">
+            </a>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.6.poster_path }}" class="card-img-top img-fluid" alt="movie-img7">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.6.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.6.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img7">
+            </a>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.7.poster_path }}" class="card-img-top img-fluid" alt="movie-img8">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.7.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.7.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img8">
+            </a>
           </div>
         </div>
       </div>
@@ -63,16 +77,24 @@
       <div class="carousel-item">
         <div class="d-flex justify-content-evenly">
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.8.poster_path }}" class="card-img-top img-fluid" alt="movie-img9">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.8.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.8.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img9">
+            </a>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.9.poster_path }}" class="card-img-top img-fluid" alt="movie-img10">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.9.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.9.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img10">
+            </a>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.10.poster_path }}" class="card-img-top img-fluid" alt="movie-img11">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.10.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.10.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img11">
+            </a>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.11.poster_path }}" class="card-img-top img-fluid" alt="movie-img12">
+            <a href="{% url 'movies:movie_detail' highscore_serializer.11.id %}">
+              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.11.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img12">
+            </a>
           </div>
         </div>
       </div>
@@ -85,6 +107,7 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
     </button>
   </div>
+
 </div>
 
 {% comment %} 게시판!!! {% endcomment %}

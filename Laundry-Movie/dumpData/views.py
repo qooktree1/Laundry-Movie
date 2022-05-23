@@ -37,8 +37,8 @@ def movie_data(request):
         tmp.delete()
 
     # 영화 개수 1페이지당 20개
-    # 원래 1, 21    
-    for page in range(1, 51):
+    # 원래 51
+    for page in range(1, 2):
         res = requests.get(link+str(page))
         data_list = res.json()['results']
 

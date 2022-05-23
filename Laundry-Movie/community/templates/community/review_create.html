@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% comment %} movie, title, rank, content {% endcomment %}
+  <h1 class="text-center">{{ movie.title }}</h1>
+  <br>
+  <div class="big-tull">
+    <form action="{% url 'community:create_review' movie.pk %}" method="POST">
+    {% csrf_token %}
+      <p>한 줄 평 {{form.title}} </p>
+
+      <p>내가 주는 평점 {{form.rank}} </p>
+
+
+      <p>후기</p>
+      {{form.content}}
+      <br>
+      <input type="submit" value="리뷰작성">
+    </form>
+    <hr>
+    <a href="{% url 'community:reviews' %}">BACK</a>
+
+
+  </div>
+{% endblock %}

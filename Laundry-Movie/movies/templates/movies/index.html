@@ -1,17 +1,26 @@
 {% load static %}
+{% if user.username %}
+<script>
+  alert('잘못된 접근입니다.')
+</script>
+<meta http-equiv="refresh" content="0;URL='{% url 'movies:home' %}'">
+
+{% else %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'main.css'%}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'LOGO.png' %}">
+  <title>Laundry - Movie</title>
 </head>
 <body>
   <div class="container">
     {% comment %} Navbar {% endcomment %}
-    <nav class="navbar navbar-expand-sm">
+    
+    <nav class="navbar navbar-expand-sm mt-3">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
           <img href="{% url 'movies:index' %}" src="{% static 'LOGO.png'%}" alt="logo_img" style="width:340px;">
@@ -42,20 +51,33 @@
             <h5 class="modal-title" id="loginModalLabal">Login</h5>
             <!-- 우상단 x버튼 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
           </div>
-          <div class="modal-body">
 
+          <div class="modal-body">
             {% comment %} form 시작 {% endcomment %}
             <form action="{% url 'accounts:login' %}" method="POST">
+              {% comment %}
+              {% if messages %}
+                {% for message in messages %}
+                    <div class="row" style="margin:20px auto;">
+                    <div class="col-sm-12">
+                        <div class="alert alert-danger">
+                        <strong>{{ message.tags }}!</strong> {{ message.message }}
+                        </div>
+                    </div>
+                    </div>
+                {% endfor %}
+              {% endif %}
+              {% endcomment %}
+              
               {% csrf_token %}
-
               <div class="mb-3">
-                <label for="username" class="col-form-label">username</label>
-                <input class="form-control" type="text" id="username" name="username">
+                <label for="login_username" class="col-form-label">username</label>
+                <input class="form-control" type="text" id="login_username" name="username" placeholder="아이디를 입력하세요">
               </div>
 
               <div class="mb-3">
                 <label for="password" class="col-form-label">Password</label>
-                <input class="form-control" type="password" id="password" name="password">
+                <input class="form-control" type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
               </div>
               <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">로그인</button>
@@ -163,3 +185,4 @@
   </script>
 </body>
 </html>
+{% endif %}
