@@ -15,7 +15,26 @@
       transform: scale(1.3);
       z-index:2;
     }
-
+    @media screen and (max-width: 768px) {
+      .card-img-top {
+        width: 100%;
+        height: 60vw;
+        object-fit: cover;
+      }
+    }
+    @media screen and (min-width: 992px){
+      .card-img-top {
+        width: 100%;
+        height: 26vw;
+        object-fit: cover;
+      }
+    }
+    .menu-links-2{
+      active: true;
+    }
+    .menu-links-1, .menu-links-3, .menu-links-4{
+      color: black;
+    }
 </style>
 {% endblock style %}
 

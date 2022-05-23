@@ -10,6 +10,10 @@ urlpatterns = [
     path('<int:review_pk>/comments/create/', views.create_comment, name='create_comment'),
 
 
+# 삭제는 작동함
     path('<int:review_pk>/review/delete/', views.delete_review, name='delete_review'),
     path('<int:comment_pk>/comment/delete/', views.delete_comment, name='delete_comment'),
+
+# 수정 하는 중
+    path('<int:review_pk>/review/update/', views.update_review, name='update_review'),
 ]

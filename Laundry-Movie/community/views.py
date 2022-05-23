@@ -100,3 +100,21 @@ def delete_comment(request, comment_pk):
         comment.delete()
         return redirect('community:detail_review', review.pk)
     return render(request, 'coummunity/detail_review.html', review.pk)
+
+
+# 리뷰 수정
+@require_http_methods(['GET', 'POST'])
+def update_review(request, review_pk):
+    review = Review.objects.get(pk=review_pk)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect('community:detail_review', review_pk)
+    else:
+        form = ReviewForm(instance=review)
+    context = {
+        'form': form,
+        'review': review,
+    }
+    return render(request, 'community/review_update.html', context)

@@ -1,26 +1,31 @@
 {% extends 'base.html' %}
 {% block style %}
+<style>
+  .menu-links-1, .menu-links-2, .menu-links-3, .menu-links-4{
+    color: black;
+  }
+</style>
 {% endblock style %}
-
 {% block content %}
 
 {% comment %} 전체 {% endcomment %}
 <div class="container">
 
 
-
+{{ comments.content|length }}   {% comment %} 왜 안나올까??? {% endcomment %}
+{{ profile_serializer.pk }}
 
 
   {% comment %} 사진 {% endcomment %}
   <div>
-
+    
   </div>
 
 
   {% comment %}  런드리 무비 {% endcomment %}
   <h3>{{ user.username }}님의 런드리무비</h3>
   <div>
-    {{ user.}}
+    {{ user.pk}}
   </div>
 
 
@@ -36,5 +41,6 @@
 
 <h1>{{user.username}}</h1>
 {% endblock content %}
+
 {% block script %}
 {% endblock script %}

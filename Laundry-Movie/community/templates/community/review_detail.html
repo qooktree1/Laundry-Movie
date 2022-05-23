@@ -5,16 +5,24 @@
 
     object-fit: cover;
   }
+  .menu-links-3{
+    active: true;
+  }
+  .menu-links-1, .menu-links-2, .menu-links-4{
+    color: black;
+  }
 </style>
 {% endblock style %}
 {% block content %}
 
-<div class="card">
-  <img class="selected-movie img-fluid crop-img" style="max-height:10rem" src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}">
-  <div class="card-img-overlay">
-    <h5 class="card-title text-white">{{ movie.title }}</h5>
+<a href="{% url 'movies:movie_detail' movie.id %}">
+  <div class="card">
+  <img class="selected-movie img-fluid crop-img" style="max-height:10rem; width:100%;" src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}">
+    <div class="card-img-overlay">
+      <h5 class="card-title text-white">{{ movie.title }}</h5>
+    </div>
   </div>
-</div>
+</a>
 
 <h3>{{ review.title }}</h3>
 <p>{{ review.created_at }}</p>
@@ -25,14 +33,14 @@
 
 
 {% comment %} 리뷰 삭제 {% endcomment %}
+{% if user.username == review.user.username %}
 <div class="delete-review">
-  {% if user.username == review.user.username %}
   <form action="{% url 'community:delete_review' review.pk %}" method="POST">
     {% csrf_token %}
     <input type="submit" value="리뷰 삭제 버튼">
   </form>
-  {% endif %}
 </div>
+{% endif %}
 
 
 
@@ -45,15 +53,15 @@
 <div class="d-flex">
   {{ comment.user }} - {{ comment.content }}
 
-  {% comment %} 리뷰 삭제 {% endcomment %}
+  {% comment %} 댓글 삭제 {% endcomment %}
+  {% if user.username == comment.user.username %}
   <div class="delete-comment">
-    {% if user.username == comment.user.username %}
     <form action="{% url 'community:delete_comment' comment.pk %}" method="POST">
       {% csrf_token %}
       <input type="submit" value="댓글 삭제 버튼">
     </form>
-    {% endif %}
   </div>
+  {% endif %}
 
 </div>
 

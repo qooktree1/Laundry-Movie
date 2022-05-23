@@ -17,6 +17,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
 
+from community.models import Review, Comment
+
 #def index(request):
 #    return render(request, 'movies/home.html')
 
@@ -25,6 +27,7 @@ from django.views.decorators.http import require_POST, require_http_methods
 def profile(request, username):
     user = get_object_or_404(get_user_model(), username=username)
     profile_serializer = ProfileSerializer(user)
+    
     return Response(profile_serializer.data)
 
 

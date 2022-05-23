@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
-
+{% block style %}
+<style>
+  .menu-links-3{
+    active: true;
+  }
+  .menu-links-1, .menu-links-2, .menu-links-4{
+    color: black;
+  }
+</style>
+{% endblock style %}
 {% block content %}
 {% comment %} movie, title, rank, content {% endcomment %}
   <h1 class="text-center">{{ movie.title }}</h1>

@@ -1,20 +1,70 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block style %}
+<style>
+	.card-img-top {
+    width: 100%;
+    height: 10vw;
+    object-fit: cover;
+  }
+
+  .selected-movie{
+    transition: all 0.2s linear;
+    z-index: 1;
+  }
+  .selected-movie:hover{
+    transform: scale(1.2);
+    z-index: 2;
+  }
+  .menu-links-3{
+    active: true;
+  }
+  .menu-links-1, .menu-links-2, .menu-links-4{
+    color: black;
+  }
+</style>
+{% endblock style %}
+
+
+
 {% block content %}
-<div class="content">
-    <div class="header">
-        <h1>Review</h1>
-        {% for review in reviews %}
-            <p>{{ review.movie_id }}</p>
-            <p>작성자 : {{ review.user }}</p>
-            <p>글 번호: {{ review.pk }}</p>  
-            <p>글 제목: {{ review.title }}</p>
-            <p>글 내용: {{ review.content }}</p>
-            <a href="{% url 'community:detail_review' review.pk%}">DETAIL</a>
-            <hr>
-        {% endfor %}
-    </div>
+
+	<div class="row d-flex justify-content-center">
+
+		{% comment %} 세탁후기 사진? {% endcomment %}
+		<div>
+			<h1 class="text-center my-5">세탁 후기</h1>
+		</div>
+
+		{% comment %} 카드 반복구간 {% endcomment %}
+		{% for review in reviews %}
+		<div class="card col-12 col-sm-4 col-md-3 col-lg-2 mx-1 my-1 selected-movie">
+			<a class="text-reset text-decoration-none" href="{% url 'community:detail_review' review.pk %}">
+				<img class="img-fluid card-img-top" src="https://image.tmdb.org/t/p/original/{{review.movie.poster_path}}">
+				<div class="card-body">
+                    <p class="card-title">{{ review.title }}</p>
+					<small class="card-text">{{ review.content }}</small>
+				</div>
+
+				<div class="card-footer">
+					<small class="text-muted">{{review.user}} - {{ review.created_at }}</small>
+				</div>
+			</a>
+		</div>
+		{% endfor %}
+	</div>
+
+{% comment %}
+<p>{{ review.movie_id }}</p>
+<p>작성자 : {{ review.user }}</p>
+<p>글 번호: {{ review.pk }}</p>  
+<p>글 제목: {{ review.title }}</p>
+<p>글 내용: {{ review.content }}</p>
+<a href="{% url 'community:detail_review' review.pk%}">DETAIL</a>
+{% endcomment %} 
+
+
     <!-- 페이징처리 시작 -->
     <div id="paging">
     <ul class="pagination justify-content-center" style="margin-top: 2rem;">
@@ -55,3 +105,6 @@
     </div>
     <!-- 페이징처리 끝 -->
 {% endblock content %}
+
+{% block script %}
+{% endblock script %}
