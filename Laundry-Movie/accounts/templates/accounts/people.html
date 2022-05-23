@@ -6,25 +6,29 @@
   }
   .card-img-top {
     width: 100%;
+    height: 30vw;
     object-fit: cover;
   }
-
   .selected-movie{
     transition: all 0.2s linear;
-    z-index: 1;
+    z-index:1;
   }
   .selected-movie:hover{
     transform: scale(1.02);
-    z-index: 2;
+    z-index:2;
   }
   @media screen and (max-width: 768px) {
-    .convert-img-size {
-      max-width: 18rem;
+    .card-img-top {
+      width: 100%;
+      height: 60vw;
+      object-fit: cover;
     }
   }
-  @media screen and (min-width: 768px) {
-    .convert-img-size {
-      
+  @media screen and (min-width: 992px){
+    .card-img-top {
+      width: 100%;
+      height: 26vw;
+      object-fit: cover;
     }
   }
 </style>
@@ -48,26 +52,17 @@
 </div>
 {% comment %}  런드리 무비 {% endcomment %}
 <h3>{{ user.username }}님의 런드리무비</h3>
-<div class="row d-flex justify-content-center">
+<div class="" id="show-movies">
+  <div class="row mx-auto" id="create-or-delete">
   {% for review in user.review_set.all %}
-  <div class="d-flex col-6 col-sm-4 col-md-3 col-lg-3 selected-movie">
-    <a class="convert-img-size text-reset text-decoration-none" href="{% url 'community:detail_review' review.pk %}">
-      <img class="img-fluid mx-2 my-2" style="" src="https://image.tmdb.org/t/p/original/{{ review.movie.poster_path }}">
+  <div class="mb-4 col-6 col-sm-6 col-md-4 col-lg-3">
+    <a href="{% url 'community:detail_review' review.pk %}">
+      <img class="selected-movie img-fluid card-img-top" src="https://image.tmdb.org/t/p/original/{{review.movie.poster_path}}">
     </a>
   </div>
   {% endfor %}
+  </div>
 </div>
-
-
-
-
-
-    
-
-
-
-
-
 
 
 {% comment %} 댓글 {% endcomment %}
