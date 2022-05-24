@@ -39,26 +39,27 @@
 {% endblock style %}
 
 {% block content %}
-<div class="">
+
   <div class="card mb-3 mt-5">
-    <div class="row g-4">
-      <div class="col-md-4">
-        <img class="img-fluid" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}">
+    <div class="row">
+      <div class="col-lg-4 d-flex justify-content-center">
+        <img class="img-fluid" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}">
       </div>
-      <div class="col-md-8">
+      <div class="col-lg-8">
         <div class="card-body">
+
           <div class="d-flex">
-            <h3 class="card-title mt-1 mb-4">{{ movie.title }}</h3>
+            <h3 class="card-title mt-1 mb-4 me-2">{{ movie.title }}</h3>
             <form id="like-form" data-id="{{ movie.id }}">
               {% csrf_token %}
               {% if user.pk in movie.like_users %}
-                <button class="btn btn-link" id="like-{{ movie.id }}" style="box-shadow:none;"><span id="heart-{{ movie.id }}" style="color: red;"><i class="fa-regular fa-heart"></i></span></button>
+                <button class="btn btn-link" id="like-{{ movie.id }}" style="box-shadow:none;"><span id="heart-{{ movie.id }}" style="color: red;"><i class="fa-solid fa-thumbs-up"></i></span></button>
               {% else %}
-                <button class="btn btn-link" id="like-{{ movie.id }}" style="box-shadow:none;"><span id="heart-{{ movie.id }}" style="color: black;"><i class="fa-regular fa-heart"></i></span></button>
+                <button class="btn btn-link" id="like-{{ movie.id }}" style="box-shadow:none;"><span id="heart-{{ movie.id }}" style="color: black;"><i class="fa-solid fa-thumbs-up"></i></span></button>
               
               {% endif %}
             </form>
-            <p><span id="like-count-{{ movie.id }}">{{ movie.like_users|length }}</span></p>
+            <span class="my-auto mt-1" id="like-count-{{ movie.id }}">{{ movie.like_users|length }}</span>
           </div>
 
           <div class="d-flex mx-auto mb-4">
@@ -78,15 +79,16 @@
             <p class="my-auto fs-5 text-muted ">러닝타임: {{ movie.runtime }}</p>
           </div>
 
-          <p class="fs-5 text-muted card-text mb-4">줄거리</p>
-          <p class="card-text">{{ movie.overview}}</p>
+          <div>
+            <p class="fs-5 text-muted card-text mb-4">줄거리</p>
+            <p class="card-text">{{ movie.overview}}</p>
+          </div>
         </div>
 
         {% comment %} 리뷰 쓰기!!! -> 버튼 눌렀을 시 community create로 이동 {% endcomment %}
-        <div class="mb-2 mx-auto ms-3">
-          <a href="{% url 'community:create_review' movie.id %}" type="button" class="btn btn-secondary">리뷰 쓰기</a>
+        <div class="mb-2 ms-3 text-center">
+          <a style="width:100%; max-width:20rem;" href="{% url 'community:create_review' movie.id %}" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-comment-dots fa-2xl"></i></span><span>리뷰 쓰기</span></a>
         </div>
-
 
       </div>
     </div>
@@ -110,8 +112,6 @@
 
 
 
-  
-</div>
 {% endblock content %}
 {% block script %}
 <script>
@@ -123,7 +123,7 @@
     axios({
       method:'post',
       headers: {'X-CSRFToken': csrftoken},
-        url: `http://127.0.0.1:8000/movies/movie_selected/${movieId}/like/`,
+      url: `http://127.0.0.1:8000/movies/movie_selected/${movieId}/like/`,
     })
       .then(res => {
         const isLiked = res.data.liked

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block style %}
 <style>
   .card-img-top {
@@ -19,7 +19,7 @@
       .card-img-top {
         width: 100%;
         height: 60vw;
-        object-fit: cover;
+        
       }
     }
     @media screen and (min-width: 992px){
@@ -35,6 +35,11 @@
     .menu-links-1, .menu-links-3, .menu-links-4{
       color: black;
     }
+    @media (min-width: 768px) {
+      .button-54 {
+        padding: 0.25em 0.75em;
+      }
+    }
 </style>
 {% endblock style %}
 
@@ -47,20 +52,31 @@
   <form id="select-form">
     {% csrf_token %}
 
+
     <h4>빨래 색상</h4>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input color-check" type="radio" id="white" name="color" value="white">
-      <label class="form-check-label" for="white">흰색</label>
+    
+    <div class="pretty p-icon p-curve p-jelly">
+      <input type="radio" name="color" id="white" class="form-check-input color-check" value="white">
+      <div class="state p-primary">
+          <i class="icon fa fa-check"></i>
+          <label for="white">흰색</label>
+      </div>
     </div>
 
-    <div class="form-check form-check-inline">
-      <input class="form-check-input color-check" type="radio" id="black" name="color" value="black">
-      <label class="form-check-label" for="black">검은색</label>
+    <div class="pretty p-icon p-curve p-jelly">
+      <input type="radio" name="color" id="black" class="form-check-input color-check" value="black">
+      <div class="state p-primary">
+          <i class="icon fa fa-check"></i>
+          <label class="form-check-label" for="black">검은색</label>
+      </div>
     </div>
 
-    <div class="form-check form-check-inline">
-      <input class="form-check-input color-check" type="radio" id="other" name="color" value="other">
-      <label class="form-check-label" for="other">다른색</label>
+    <div class="pretty p-icon p-curve p-jelly">
+      <input type="radio" name="color" id="other" class="form-check-input color-check" value="other">
+      <div class="state p-primary">
+          <i class="icon fa fa-check"></i>
+          <label class="form-check-label" for="other">다른색</label>
+      </div>
     </div>
   </form>
   
@@ -68,20 +84,32 @@
     {% csrf_token %}
 
     <h4>세탁 모드</h4>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input runtime-check" type="radio" id="short" name="runtime" value="short">
-      <label class="form-check-label" for="short">빠름</label>
+
+    <div class="pretty p-icon p-curve p-jelly">
+      <input type="radio" name="runtime" id="short" class="form-check-input runtime-check" value="short">
+      <div class="state p-warning">
+          <i class="icon fa fa-check"></i>
+          <label class="form-check-label" for="short">빠름</label>
+      </div>
     </div>
 
-    <div class="form-check form-check-inline">
-      <input class="form-check-input runtime-check" type="radio" id="normal" name="runtime" value="normal">
-      <label class="form-check-label" for="normal">보통</label>
+
+    <div class="pretty p-icon p-curve p-jelly">
+      <input type="radio" name="runtime" id="normal" class="form-check-input runtime-check" value="normal">
+      <div class="state p-warning">
+          <i class="icon fa fa-check"></i>
+          <label class="form-check-label" for="normal">보통</label>
+      </div>
     </div>
 
-    <div class="form-check form-check-inline">
-      <input class="form-check-input runtime-check" type="radio" id="long" name="runtime" value="long">
-      <label class="form-check-label" for="long">느림</label>
+    <div class="pretty p-icon p-curve p-jelly">
+      <input type="radio" name="runtime" id="long" class="form-check-input runtime-check" value="long">
+      <div class="state p-warning">
+          <i class="icon fa fa-check"></i>
+          <label class="form-check-label" for="long">느림</label>
+      </div>
     </div>
+
   </form>
   </div>
 </div>
@@ -94,10 +122,9 @@
 
 {% comment %} 추천 런드리 무비 {% endcomment %}
 
-<div class="">
   <h1 class="text-center mb-5">추천 런드리무비</h1>  
   <div class="" id="show-movies">
-    <div class="row mx-auto" id="create-or-delete">
+    <div class="row mx-auto d-flex justify-content-center" id="create-or-delete">
     {% for movie in highscore_serializer %}
       <div class="mb-4 col-6 col-sm-6 col-md-4 col-lg-3">
         <a href="{% url 'movies:movie_detail' movie.id %}"><img class="selected-movie img-fluid card-img-top" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"></a>
@@ -105,7 +132,6 @@
     {% endfor %}
     </div>
   </div>
-</div>
 
 {% endblock content %}
 {% block script %}
@@ -156,7 +182,7 @@
             let newDiv = document.createElement('div')
             let newNewDiv = document.createElement('div')
 
-            newDiv.setAttribute('class', 'row mx-auto')
+            newDiv.setAttribute('class', 'row mx-auto d-flex justify-content-center')
             newDiv.setAttribute('id', 'create-or-delete')
             obj.appendChild(newDiv)
 

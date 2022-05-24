@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from .models import Review, Comment
 from movies.models import Movie

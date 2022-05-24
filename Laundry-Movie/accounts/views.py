@@ -87,7 +87,7 @@ def profile(request, username):
             return redirect('accounts:people', user.username)
         return redirect('accounts:profile')
     else:
-        profile = Profile.objects.get(user=request.user)
+        profile, create = Profile.objects.get_or_create(user=request.user)
         profile_form = ProfileForm(instance=profile)
     context = {
         'profile_form': profile_form,

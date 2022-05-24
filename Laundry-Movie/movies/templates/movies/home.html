@@ -24,104 +24,108 @@
 </style>
 {% endblock style %}
 {% block content %}
-<div class="">
-  <h1 class="text-center my-5">추천 영화</h1>
-  <div id="carouselExampleControls" class="carousel slide mt-5" data-bs-ride="carousel">
-    <div class="carousel-inner">
+<h1 class="text-center my-5">추천 영화</h1>
 
-      <div class="carousel-item active">
-        <div class="d-flex justify-content-evenly">
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.0.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.0.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img1">
-            </a>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.1.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.1.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img2">
-            </a>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.2.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.2.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img3">
-            </a>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.3.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.3.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img4">
-            </a>
-          </div>
+
+<div id="carouselExampleControls" class="carousel slide mt-5" data-bs-ride="carousel">
+  <div class="carousel-inner">
+
+    <div class="carousel-item active">
+      <div class="d-flex justify-content-evenly">
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.0.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.0.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img1">
+          </a>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.1.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.1.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img2">
+          </a>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.2.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.2.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img3">
+          </a>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.3.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.3.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img4">
+          </a>
         </div>
       </div>
-      
-      <div class="carousel-item">
-        <div class="d-flex justify-content-evenly">
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.4.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.4.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img5">
-            </a>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.5.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.5.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img6">
-            </a>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.6.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.6.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img7">
-            </a>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.7.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.7.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img8">
-            </a>
-          </div>
+    </div>
+    
+    <div class="carousel-item">
+      <div class="d-flex justify-content-evenly">
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.4.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.4.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img5">
+          </a>
         </div>
-      </div>
-
-      <div class="carousel-item">
-        <div class="d-flex justify-content-evenly">
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.8.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.8.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img9">
-            </a>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.9.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.9.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img10">
-            </a>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.10.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.10.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img11">
-            </a>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <a href="{% url 'movies:movie_detail' highscore_serializer.11.id %}">
-              <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.11.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img12">
-            </a>
-          </div>
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.5.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.5.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img6">
+          </a>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.6.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.6.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img7">
+          </a>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.7.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.7.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img8">
+          </a>
         </div>
       </div>
     </div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </button>
+    <div class="carousel-item">
+      <div class="d-flex justify-content-evenly">
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.8.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.8.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img9">
+          </a>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.9.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.9.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img10">
+          </a>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.10.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.10.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img11">
+          </a>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <a href="{% url 'movies:movie_detail' highscore_serializer.11.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ highscore_serializer.11.poster_path }}" class="card-img-top img-fluid selected-movie" alt="movie-img12">
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <br>
-  <br>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  </button>
+</div>
+
+
+
+<br>
+<br>
 {% comment %} 게시판!!! {% endcomment %}
+<div class="board mt-5">
   <h1 class="text-center my-5">최근 게시글</h1>
   {% if reviews %}
     {% for review in reviews %}
       <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a class="text-decoration-none" href="{% url 'community:detail_review' review.pk %}">{{ review.title }}</a>
+          <a class="text-decoration-none ms-1" href="{% url 'community:detail_review' review.pk %}">{{ review.title }}</a>
           <span class="badge bg-primary rounded-pill">{{ review.comment_set.count }}</span>
         </li>
       </ul>
@@ -130,7 +134,6 @@
   <p>작성된 게시글이 없습니다.</p>
   {% endif %}
 </div>
-
 <br>
 {% endblock content %}
 {% block script %}

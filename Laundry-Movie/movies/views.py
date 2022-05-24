@@ -37,8 +37,11 @@ def selected(request):
     highscore_serializer = MovieSerializer(data=highscore_movies, many=True)
     # 유효성 검사
     highscore_serializer.is_valid()
+    
+    
     context = {
         'highscore_serializer': highscore_serializer.data,
+        
     }
     return render(request, 'movies/selected.html', context)
 

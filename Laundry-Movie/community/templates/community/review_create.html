@@ -10,25 +10,30 @@
 </style>
 {% endblock style %}
 {% block content %}
-{% comment %} movie, title, rank, content {% endcomment %}
-  <h1 class="text-center">{{ movie.title }}</h1>
+
+{% comment %} Bootstrap5 pip install 필요!{% endcomment %}
+
+  <h1 class="text-center mt-3">{{ movie.title }}</h1>
   <br>
-  <div class="big-tull">
+  <div class="big-tull ms-5 d-flex justify-content-center">
     <form action="{% url 'community:create_review' movie.pk %}" method="POST">
     {% csrf_token %}
-      <p>한 줄 평 {{form.title}} </p>
+      <div class="d-flex">
+        <p class="me-5">한 줄 평 {{form.title}} </p>
+        <p>내가 주는 평점 {{form.rank}} </p>
+      </div>
+      
+      
+      <p class="text-center">후기</p>
 
-      <p>내가 주는 평점 {{form.rank}} </p>
-
-
-      <p>후기</p>
-      {{form.content}}
-      <br>
-      <input type="submit" value="리뷰작성">
+      <div class="d-flex align-items-center">
+        <p>{{form.content}}</p>
+        <button type="submit "class="button-57 text-center" role="button"><span class="text">다 썼어?</span><span>그럼 눌러</span></button>
+      </div>
     </form>
-    <hr>
-    <a href="{% url 'community:reviews' %}">BACK</a>
-
-
+    
+    
   </div>
+  <hr>
+  <a href="{% url 'community:reviews' %}">BACK</a>
 {% endblock %}

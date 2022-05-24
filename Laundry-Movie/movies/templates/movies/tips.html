@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block style %}
 <style>
   .menu-links-4{
@@ -7,52 +8,19 @@
   .menu-links-1, .menu-links-2, .menu-links-3{
     color: black;
   }
+  .tip-img{
+    width:100%;
+  }
+
 </style>
 {% endblock style %}
 {% block content %}
+<img class="tip-img" src="{% static 'tip.png' %}" alt="이거 안나오면 굉장히 슬플텐데..">
 
-<div class="mt-5">
-  <h1 class="text-center"><런드리 무비가 알려주는 빨래 TIP></h1>
-</div>
-<br>
-<br>
-<br>
-<div>
-  <p class="fs-3 fw-bolder">Q1. 검은색 옷이 바랬어요 ㅠㅠ</p>
-  <p class="fs-5">맥주! 제가 제일 좋아하는... 아니, 검은색을 되살려주는 마법같은 액체랍니다 :)</p>
-  <p class="fs-5">바랜 검은 옷을 맥주에 30분~ 1시간 담가두신 후 깨끗한 물에 헹구세요! 그리고 그늘에 말리신다면 검은색이 선명하게 되살아난답니다.</p>
-  
+
+<div class="mb-5 text-center">
+  <a style="width:40%; max-width:20rem;" href="{% url 'movies:selected' %}" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-clapperboard fa-2xl"></i></span><span>영화 추천</span></a>
 </div>
 
-<br>
-<br>
-<br>
 
-<div>
-  <h1 class="fs-1 fw-bolder">Q2.</h1>
-</div>
-
-<br>
-<br>
-<br>
-
-<div>
-  <h1 class="fs-1 fw-bolder">Q3.</h1>
-</div>
-
-<br>
-<br>
-<br>
-
-<div>
-  <h1 class="fs-1 fw-bolder">Q4.</h1>
-</div>
-
-<br>
-<br>
-<br>
-
-<div>
-  <h1 class="fs-1 fw-bolder">Q5.</h1>
-</div>
 {% endblock content %}

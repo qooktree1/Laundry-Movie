@@ -36,20 +36,18 @@
 {% block content %}
 <div class="row">
   <div class="d-flex justify-content-center flex-column align-items-center">
-    <img class="mt-5" src={% if person.profile.image %}"{{ person.profile.image.url }}"{% else %}""{% endif %} style="border-radius: 20%; max-width: 20rem" alt="user-img">
+    <img class="mt-5" src={% if person.profile.image %}"{{ person.profile.image.url }}"{% else %}"https://i.stack.imgur.com/34AD2.jpg"{% endif %} style="border-radius: 20%; max-width: 20rem" alt="user-img">
     <br>
     <h5>{{ person.username }}</h5>
-
-    <h2>
-      {% if person.username == user.username %}
-      <a href="{% url 'accounts:profile' person.username %}"><button class="btn btn-primary">프로필 편집</button></a>
-      {% endif %}
-      <!-- 다음 포스트에 프로필 편집 페이지를 구성할 것이다. -->
-    </h2>
   </div>
-      
-
 </div>
+{% if person.username == user.username %}
+<div class="mb-2 text-center">
+  <a href="{% url 'accounts:profile' person.username %}" class="button-57 text-center w-50" role="button" style="max-width:300px;"><span><i class="fa-solid fa-address-card fa-2xl"></i></span><span class="text">프로필 편집</span></a>
+</div>
+{% endif %}
+
+
 {% comment %}  런드리 무비 {% endcomment %}
 <h3>{{ user.username }}님의 런드리무비</h3>
 <div class="" id="show-movies">
