@@ -43,46 +43,62 @@
   <div class="card mb-3 mt-5">
     <div class="row g-4">
       <div class="col-md-4">
-        <img class="img-fluid" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.0.poster_path }}">
+        <img class="img-fluid" style="" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}">
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h3 class="card-title mt-1 mb-4">{{ movie.0.title }}</h3>
+          <div class="d-flex">
+            <h3 class="card-title mt-1 mb-4">{{ movie.title }}</h3>
+            <form id="like-form" data-id="{{ movie.id }}">
+              {% csrf_token %}
+              {% if user.pk in movie.like_users %}
+                <button class="btn btn-link" id="like-{{ movie.id }}" style="box-shadow:none;"><span id="heart-{{ movie.id }}" style="color: red;"><i class="fa-regular fa-heart"></i></span></button>
+              {% else %}
+                <button class="btn btn-link" id="like-{{ movie.id }}" style="box-shadow:none;"><span id="heart-{{ movie.id }}" style="color: black;"><i class="fa-regular fa-heart"></i></span></button>
+              
+              {% endif %}
+            </form>
+            <p><span id="like-count-{{ movie.id }}">{{ movie.like_users|length }}</span></p>
+          </div>
+
           <div class="d-flex mx-auto mb-4">
             <p class="my-auto fs-5 text-muted me-5">개봉</p>
-            <p class="my-auto card-title">{{ movie.0.release_date }}</p>
+            <p class="my-auto card-title">{{ movie.release_date }}</p>
 
             <p class="my-auto fs-5 text-muted ms-5 me-3">평점</p>
-            <p class="my-auto fs-5 card-title">{{ movie.0.vote_average }}</p>
+            <p class="my-auto fs-5 card-title">{{ movie.vote_average }}</p>
 
           </div>
 
           <div class="d-flex mb-4">
             <p class="my-auto fs-5 text-muted me-5">장르</p>
             <p class="my-auto me-3">
-              {% for a in movie.0.genres %}{{ a.name }} {% endfor %}
+              {% for a in movie.genres %}{{ a.name }} {% endfor %}
             </p>
-            <p class="my-auto fs-5 text-muted ">러닝타임: {{ movie.0.runtime }}</p>
+            <p class="my-auto fs-5 text-muted ">러닝타임: {{ movie.runtime }}</p>
           </div>
 
           <p class="fs-5 text-muted card-text mb-4">줄거리</p>
-          <p class="card-text">{{ movie.0.overview}}</p>
+          <p class="card-text">{{ movie.overview}}</p>
         </div>
 
         {% comment %} 리뷰 쓰기!!! -> 버튼 눌렀을 시 community create로 이동 {% endcomment %}
         <div class="mb-2 mx-auto ms-3">
-          <a href="{% url 'community:create_review' movie.0.id %}" type="button" class="btn btn-secondary">리뷰 쓰기</a>
+          <a href="{% url 'community:create_review' movie.id %}" type="button" class="btn btn-secondary">리뷰 쓰기</a>
         </div>
 
 
       </div>
     </div>
   </div>
+  <div>
 
+
+  </div>
 
   <div class="mt-4 iframe">
     <h1>예고편</h1>
-    <iframe class="responsive-iframe" width="900rem" height="500rem"src="//www.youtube.com/embed/{{ movie.0.video_path }}" frameborder="0" allowfullscreen></iframe>
+    <iframe class="responsive-iframe" width="900rem" height="500rem"src="//www.youtube.com/embed/{{ movie.video_path }}" frameborder="0" allowfullscreen></iframe>
   </div>
 
   <h1 class="mt-5">관련 영화</h1>
@@ -98,5 +114,31 @@
 </div>
 {% endblock content %}
 {% block script %}
-
+<script>
+  const form = document.querySelector('#like-form')
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    const movieId = e.target.dataset.id
+    axios({
+      method:'post',
+      headers: {'X-CSRFToken': csrftoken},
+        url: `http://127.0.0.1:8000/movies/movie_selected/${movieId}/like/`,
+    })
+      .then(res => {
+        const isLiked = res.data.liked
+        const isLikeNumber = res.data.likeCount
+        console.log(isLikeNumber)
+        const heart = document.querySelector(`#heart-${movieId}`)
+        const likeCount = document.querySelector(`#like-count-${movieId}`)
+                    
+        if (isLiked === true) { heart.setAttribute('style', 'color:red')}
+        else { heart.setAttribute('style', 'color:black') }
+        likeCount.innerText = isLikeNumber
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        })
+</script>
 {% endblock script %}

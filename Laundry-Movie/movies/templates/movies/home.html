@@ -113,46 +113,25 @@
     </button>
   </div>
 
-</div>
-
+  <br>
+  <br>
 {% comment %} 게시판!!! {% endcomment %}
-<div>
   <h1 class="text-center my-5">최근 게시글</h1>
-
-
-
-</div>
-<div style="height:280px;">
-  <table class="board">
-      <thead>
-          <tr class="header">
-              <th style="width:10%;">순번</th>
-              <th style="width:60%">제목</th>
-              <th style="width:30%">작성일자</th>
-          </tr>
-      </thead>
-      <tbody>
-      {% if reviews %}
-          {% for data in reviews %}
-          <tr>
-              <td style="text-align:center;">{{ forloop.counter }}</td>
-              <td>
-                  <a href="">
-                      {{ data.title }}
-                  </a>
-              </td>
-              <td>{{ data.created_at|date:'Y-m-d' }}</td>
-          </tr>
-          {% endfor %}
-      {% else %}
-          <tr>
-              <td>작성된 게시글이 없습니다.</td>
-          </tr>
-      {% endif %}
-      </tbody>
-  </table>
+  {% if reviews %}
+    {% for review in reviews %}
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a class="text-decoration-none" href="{% url 'community:detail_review' review.pk %}">{{ review.title }}</a>
+          <span class="badge bg-primary rounded-pill">{{ review.comment_set.count }}</span>
+        </li>
+      </ul>
+    {% endfor %}
+  {% else %}
+  <p>작성된 게시글이 없습니다.</p>
+  {% endif %}
 </div>
 
+<br>
 {% endblock content %}
 {% block script %}
 <script>

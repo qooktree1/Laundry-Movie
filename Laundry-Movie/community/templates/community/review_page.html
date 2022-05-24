@@ -3,58 +3,123 @@
 
 {% block style %}
 <style>
-	.card-img-top {
-    width: 100%;
-    height: 10vw;
-    object-fit: cover;
-  }
-
-  .selected-movie{
-    transition: all 0.2s linear;
-    z-index: 1;
-  }
-  .selected-movie:hover{
-    transform: scale(1.2);
-    z-index: 2;
-  }
   .menu-links-3{
     active: true;
   }
   .menu-links-1, .menu-links-2, .menu-links-4{
     color: black;
   }
+	.gallerylist{
+		width:100%;
+		margin:0 auto;
+	}
+	.card-ul{ font-size:0; }
+	.card-ul > li {
+		display: inline-block;
+		vertical-align: top;
+		width:25%;
+	}
+	.card-ul > li > a {
+		display: block;
+		width: auto;
+		margin: 5px;
+	}
+	.card-ul > li > a .screen {
+		position: relative;
+		overflow: hidden;
+	}
+	.card-ul > li > a .screen .top {
+		position: absolute;
+		bottom: 150%;
+		left: 30px;
+		z-index: 2;
+		color: #fff;
+		font-size: 2.0rem;
+		font-weight: 900;
+		transition:all .35s;
+	}
+	.card-ul > li > a .screen .bottom {
+		position: absolute;
+		top: 150%;
+		left: 30px;
+		z-index: 2;
+		color: #fff;
+		font-size: 1.4rem;
+		transition:all .35s;
+	}
+	.card-ul > li > a .screen img {
+		width: 100%;
+	}
+	.card-ul > li > a:hover .top { bottom: 52%; }
+	.card-ul > li > a:hover .bottom { top: 52%; }
+	li>a:hover img{
+		transform: scale(1.2);
+	  transition: transform 0.5s;
+	  filter: brightness(70%);
+	}
+	@media screen and (min-width: 992px) {
+		.object-img{
+			max-height: 19.5rem;
+			object-fit: cover;
+		}
+	}
+	@media screen and (max-width: 992px) {
+		.card-ul > li {
+			display: inline-block;
+			vertical-align: top;
+			width:33.3%;
+		}
+		.card-ul > li > a .screen .top {
+			font-size: 1.8rem;
+		}
+		.card-ul > li > a .screen .bottom {
+			font-size: 1.2rem;
+		}
+		.object-img{
+			max-height: 18.5rem;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		.card-ul > li {
+			display: inline-block;
+			vertical-align: top;
+			width:50%;
+		}
+	}
+	@media screen and (max-width: 576px) {
+		.card-ul > li {
+			display: inline-block;
+			vertical-align: top;
+			width:100%;
+		}
+		.object-img{
+			max-height: 100%;
+		}
+	}
 </style>
 {% endblock style %}
-
-
-
 {% block content %}
+{% comment %} 세탁후기 사진 {% endcomment %}
+<div>
+	<h1 class="text-center my-5">세탁 후기</h1>
+</div>
 
-	<div class="row d-flex justify-content-center">
-
-		{% comment %} 세탁후기 사진? {% endcomment %}
-		<div>
-			<h1 class="text-center my-5">세탁 후기</h1>
-		</div>
-
-		{% comment %} 카드 반복구간 {% endcomment %}
-		{% for review in reviews %}
-		<div class="card col-12 col-sm-4 col-md-3 col-lg-2 mx-1 my-1 selected-movie">
-			<a class="text-reset text-decoration-none" href="{% url 'community:detail_review' review.pk %}">
-				<img class="img-fluid card-img-top" src="https://image.tmdb.org/t/p/original/{{review.movie.poster_path}}">
-				<div class="card-body">
-                    <p class="card-title">{{ review.title }}</p>
-					<small class="card-text">{{ review.content }}</small>
-				</div>
-
-				<div class="card-footer">
-					<small class="text-muted">{{review.user}} - {{ review.created_at }}</small>
+{% comment %} 카드 반복구간 {% endcomment %}
+<div class="gallerylist row">
+	<ul class="card-ul">
+	{% for review in reviews %}
+		<li>
+			<a href="{% url 'community:detail_review' review.pk %}">
+				<div class="screen">
+					<div class="top">{{ review.title }}</div>
+					<div class="bottom">{{review.user}}<br>{{ review.created_at }}</div>
+					<img class="object-img" src="https://image.tmdb.org/t/p/original/{{review.movie.poster_path}}">
 				</div>
 			</a>
-		</div>
-		{% endfor %}
-	</div>
-
+		</li>
+	{% endfor %}
+	</ul>
+</div>
 {% endblock content %}
 
 {% block script %}

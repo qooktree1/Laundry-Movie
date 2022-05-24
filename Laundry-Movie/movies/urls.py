@@ -12,7 +12,6 @@ urlpatterns = [
     
     path('allmovie/', views.movie_list, name='movie_list'),
     path('movie_selected/<int:movie_pk>', views.movie_detail, name='movie_detail'),
-    # 영화 좋아요 표시를 위한 것
-    # path('movie_selected/<int:movie_pk>/like/', views.movie_like, name='movie_like'),
-    
+    # 영화 좋아요 -> 좋아요 한 영화 순으로 나열
+    path('movie_selected/<int:movie_pk>/like/', views.like_movie, name='like_movie'),
 ]   

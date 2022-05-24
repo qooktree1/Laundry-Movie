@@ -6,28 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'shortcut_icon.png' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Dongle&family=Gowun+Dodum&family=Inconsolata&family=Jua&display=swap" rel="stylesheet">
   <title>Laundry - Movie</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inconsolata&display=swap');
     *{
       font-family: 'Amatic SC', cursive;
+      font-family: 'Dongle', sans-serif;
+      font-family: 'Gowun Dodum', sans-serif;
       font-family: 'Inconsolata', monospace;
-    }
-
-    @media screen and (min-width: 992px){
-      .outside-collapse{
-        display: flex;
-        justify-content: space-between;
-      }
-      .inner-collapse-1{
-        display: flex;
-      }
-    }
-    @media screen and (min-width: 992px){
-      .hamburger{
-        display: flex;
-        justify-content: center;
-      }
+      font-family: 'Jua', sans-serif;
     }
     .rotate-img{
       transform:rotate(90deg);
@@ -38,6 +27,29 @@
     footer{
       z-index: 0;
     }
+    .menu-links-1 > p, .menu-links-2 > p, .menu-links-3 > p, .menu-links-4 > p{
+      
+    }
+    @media screen and (max-width:768px) {
+      .home-tip{
+        display: flex;
+        justify-content: center;
+      }
+    }
+    @media screen and (max-width:768px) {
+      .lg-collapse{
+        display: none;
+      }
+    }
+    @media screen and (max-width:992px){
+      .dropdown{
+        display:none;
+      }
+      
+    }
+    .home-tip{
+      margin: auto;
+    }
   </style>
   {% block style %}
   {% endblock style %}
@@ -45,7 +57,6 @@
 <body>
 
   <div class="container">
-    
     {% comment %} Logo {% endcomment %}
     <div class="text-center my-3">
       <a class="navbar-brand" href="{% url 'movies:home' %}">
@@ -54,35 +65,26 @@
     </div>
 
     {% comment %} Navbar {% endcomment %}
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand bg-light">
       <div class="container-fluid">
-        <div class="hamburger">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-        </div>
-        {% comment %} container-fluid 클래스에서 뺌 {% endcomment %}
-        <div class="collapse navbar-collapse outside-collapse" id="navbarCollapse">
+          {% comment %} 메뉴들 {% endcomment %}
+          <ul class="navbar-nav home-tip">
+            <li>
+              <a class="nav-link fs-5 menu-links-1 mt-3" aria-current="page" href="{% url 'movies:home' %}"><p class="my-0 py-0 lh-base">Home</p></a>
+            </li>
+            <li class="nav-items">
+              <a class="nav-link fs-5 menu-links-2 mt-3" href="{% url 'movies:selected' %}"><p>추천모드</p></a>
+            </li>
+            <li class="nav-items">
+              <a class="nav-link fs-5 menu-links-3 mt-3" href="{% url 'community:reviews' %}"><p>세탁후기</p></a>
+            </li>
+            <li class="nav-items">
+              <a class="nav-link fs-5 menu-links-4 mt-3" href="{% url 'movies:tips' %}"><p>세탁TIP</p></a>
+            </li>
+          </ul>
 
-          <div class="">
-            {% comment %} 메뉴들 {% endcomment %}
-            <ul class="navbar-nav me-audo mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link fs-5 menu-links-1" aria-current="page" href="{% url 'movies:home' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fs-5 menu-links-2" href="{% url 'movies:selected' %}">추천모드</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fs-5 menu-links-3" href="{% url 'community:reviews' %}">세탁후기</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fs-5 menu-links-4" href="{% url 'movies:tips' %}">세탁TIP</a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="inner-collapse-1">
+        <div class="lg-collapse">
+          <div class="collapse navbar-collapse" id="navbarCollapse">
             {% comment %} 질문하기 {% endcomment %}
             <form class="d-flex me-5" role="search" action="{% url 'movies:search_result' %}" method="GET">
               {% csrf_token %}
@@ -107,21 +109,19 @@
               </ul>
             </div>
           </div>
-
-
         </div>
       </div>
     </nav>
-
+    
 
 
   
     {% block content %}
     {% endblock content %}
-</div>
+
     {% comment %} Footer {% endcomment %}
-    <footer class="footer">
-      <div class="container-fluid text-center text-md-left footer-container">
+    <footer class="footer bg-light sticky-footer">
+      <div class="container-fluid text-center footer-container">
         <div class="container p-4">
 
           <a href="#">
@@ -142,6 +142,7 @@
         </div>
       </div>
     </footer>
+  </div>
   {% comment %} Script 코드 - 부트스트랩, Axios, Fontawesome {% endcomment %}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

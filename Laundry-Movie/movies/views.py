@@ -4,9 +4,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.views.decorators.http import require_GET, require_POST
-from django.shortcuts import get_list_or_404, render, redirect
+from django.shortcuts import get_list_or_404, render, redirect, get_object_or_404
 from .models import Movie, Genre
-from community.models import Review
+from community.models import Review, Comment
 from .serializers import GenreSerializer, MovieDetailSerializer, MovieSerializer
 from django.db.models import Q
 from django.contrib.auth import get_user_model
@@ -25,7 +25,6 @@ def home(request):
     highscore_serializer = MovieSerializer(data=highscore_movies, many=True)
     highscore_serializer.is_valid()
     reviews = Review.objects.order_by('-pk')
-
     context = {
         'highscore_serializer': highscore_serializer.data,
         'reviews': reviews,
@@ -174,12 +173,16 @@ def movie_detail(request, movie_pk):
     movies_same_genre = Movie.objects.filter(genres__id__in=genres).prefetch_related('genres').distinct()[:5]
     same_genre_serializer = MovieSerializer(data = movies_same_genre, many=True)
     
+
+
     # 유효성 검사
     movie_serializer.is_valid()
     same_genre_serializer.is_valid()
     
+    print(movie_serializer.data[0])
+
     context = {
-        'movie': movie_serializer.data,
+        'movie': movie_serializer.data[0],
         'same_genres': same_genre_serializer.data,
     }
     return render(request, 'movies/movie_detail.html', context)
@@ -194,3 +197,22 @@ def search_result(request):
         'movies': movies,
     }
     return render(request, 'movies/search_result.html', context)
+
+
+@require_POST
+def like_movie(request, movie_pk):
+    if request.user.is_authenticated:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        
+        if movie.like_users.filter(pk=request.user.pk).exists():
+            movie.like_users.remove(request.user)
+            liked = False
+        else:
+            movie.like_users.add(request.user)
+            liked = True
+        like_status = {
+            'liked' : liked,
+            'likeCount': movie.like_users.count()
+        }
+        return JsonResponse(like_status)
+    return redirect('movies:index') #애초에 로그인 안되있는 경우 인덱스 소개 페이지
