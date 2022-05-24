@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from .models import Review, Comment
 from movies.models import Movie
@@ -91,7 +90,7 @@ def delete_comment(request, comment_pk):
     if request.method == 'POST':
         comment.delete()
         return redirect('community:detail_review', review.pk)
-    return render(request, 'coummunity/detail_review.html', review.pk)
+    return render(request, 'coummunity/review_detail.html', review.pk)
 
 
 # 리뷰 수정
@@ -106,8 +105,7 @@ def update_review(request, review_pk):
                 review.user = request.user
                 review.save()
                 return redirect('community:detail_review', review_pk)
-        else:
-            form = ReviewForm(instance=review)
+        form = ReviewForm(instance=review)
         context = {
             'form': form,
             'review': review,

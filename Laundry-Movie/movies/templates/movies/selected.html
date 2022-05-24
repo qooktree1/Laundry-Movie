@@ -49,7 +49,7 @@
   <div class="text-center">
     <h1>어떤 빨래를 하시나요?</h1>
   
-  <form id="select-form">
+  <form id="select-form" class="mt-5">
     {% csrf_token %}
 
 
@@ -80,7 +80,7 @@
     </div>
   </form>
   
-  <form id="select-form">
+  <form id="select-form" class="mt-5">
     {% csrf_token %}
 
     <h4>세탁 모드</h4>
@@ -111,6 +111,10 @@
     </div>
 
   </form>
+
+  <input value="초기화" class="button-81 mt-5" onClick='btnClick()' type="button">
+
+
   </div>
 </div>
 
@@ -140,6 +144,63 @@
     let runtimeBtns = document.querySelectorAll('input[name="runtime"]')
     
 
+    {% comment %} 색상 초기화 버튼 {% endcomment %}
+    function btnClick() {
+      // 체크 초기화
+      for (let c of colorBtns) {
+        if (c.checked) {
+          c.checked = false
+        }
+      }
+      for (let r of runtimeBtns){
+        if (r.checked){
+          r.checked = false
+        }
+      }
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+      axios({
+        method:'post',
+        headers: {'X-CSRFToken': csrftoken},
+        url: `http://127.0.0.1:8000/movies/allmovie/`,
+        })
+          .then(res => {
+            // 삭제
+            const deleteDiv = document.getElementById('create-or-delete')
+            deleteDiv.remove()
+
+            // 생성
+            let obj = document.getElementById("show-movies")
+
+            let newDiv = document.createElement('div')
+            let newNewDiv = document.createElement('div')
+
+            newDiv.setAttribute('class', 'row mx-auto d-flex justify-content-center')
+            newDiv.setAttribute('id', 'create-or-delete')
+            obj.appendChild(newDiv)
+
+            let movies = res.data.highscore_serializer
+
+            movies.forEach( movie => {
+            let div1 = document.createElement('div')
+            div1.setAttribute('class', 'mb-4 col-6 col-sm-6 col-md-4 col-lg-3')
+            newDiv.appendChild(div1)
+
+            let a = document.createElement('a')
+            let img = document.createElement('img')
+            div1.appendChild(a)
+
+            a.setAttribute('href', `http://127.0.0.1:8000/movies/movie_selected/${movie.id}`)
+            a.appendChild(img)
+            img.setAttribute('class', 'selected-movie img-fluid card-img-top')
+            img.setAttribute('src', `https://image.tmdb.org/t/p/w500/${movie.poster_path}`)
+            })
+
+          })
+          }
+
+
+
+    {% comment %} 색상 나오는 거 {% endcomment %}
     document.addEventListener('input', e => {
       e.preventDefault()
       const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value

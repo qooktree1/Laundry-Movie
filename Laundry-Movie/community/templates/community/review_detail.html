@@ -16,19 +16,35 @@
   label{
     display:none;
   }
+  .img-a { bottom: 52%; }
+	.img-a:hover img{
+		transform: scale(1.02);
+	  transition: transform 0.5s;
+	  filter: brightness(70%);
+	}
+  .title-text{
+    visibility: hidden;
+    font-size: 5rem;
+  }
+  .img-a:hover .title-text{
+    visibility: visible;
+  }
 </style>
 {% endblock style %}
 {% block content %}
 
-<a href="{% url 'movies:movie_detail' movie.id %}">
+{% comment %} 이미지 {% endcomment %}
+<a href="{% url 'movies:movie_detail' movie.id %}" class="img-a">
   <div class="card">
-  <img class="selected-movie img-fluid crop-img" style="max-height:20rem; width:100%;" src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}">
-    <div class="card-img-overlay">
-      <h5 class="card-title text-white">{{ movie.title }}</h5>
+    <img class="selected-movie img-fluid crop-img" style="max-height:30rem; width:100%;" src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}">
+    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+      <h5 class="card-title title-text text-white">{{ movie.title }}</h5>
     </div>
   </div>
 </a>
 
+
+{% comment %} 제목 {% endcomment %}
 <br>
 <div>
   <h3>제목: {{ review.title }}</h3>
@@ -38,17 +54,28 @@
     <p>생성시간: {{ review.created_at }}</p>
   </div>
 </div>
-<hr>
 
-{% comment %} 리뷰 삭제 {% endcomment %}
+{% comment %} 리뷰 수정 or 삭제 {% endcomment %}
 {% if user.username == review.user.username %}
-<div class="delete-review">
-  <form action="{% url 'community:delete_review' review.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="리뷰 삭제 버튼">
-  </form>
+<div class="d-flex">
+  <div class="update-review">
+    <form action="{% url 'community:update_review' review.pk %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" style="width:100%; max-width:120px;" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-wrench fa-xl"></i></span><span>리뷰 수정</span></button>
+    </form>
+  </div>
+
+
+  <div class="delete-review">
+    <form action="{% url 'community:delete_review' review.pk %}" method="POST">
+      {% csrf_token %}
+      <button type="button" onClick='confirmBtn()' style="width:100%; max-width:120px;" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-trash fa-xl"></i></span><span>리뷰 삭제</span></button>
+    </form>
+  </div>
+
 </div>
 {% endif %}
+<hr>
 
 
 
@@ -75,7 +102,7 @@
 
 
 {% empty %}
-  <p><b>아름다운 댓글을 달아주세요! :)</b></p>
+  <p><strong>아름다운 댓글을 달아주세요! :)</strong></p>
 {% endfor %}
 
 
@@ -100,4 +127,18 @@
   
 {% endblock  %}
 {% block script %}
+<script>
+  function confirmBtn() {
+    up = confirm('정말 지우시겠습니까?')
+
+    if (up)
+    {
+      document.form.submit()
+    }
+    else {
+      alert('삭제를 취소하셨습니다.')
+      return false
+    }
+  }
+</script>
 {% endblock script %}
