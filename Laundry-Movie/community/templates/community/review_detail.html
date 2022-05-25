@@ -130,25 +130,22 @@
 
 <h4>댓글</h4>
 {% if comments|length %}
-  <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+  <p class="comments_length"><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
 {% endif %}
+  {% for comment in comments %}
+  <div class="d-flex comments">
+    <p class="comment">{{ comment.user }} - {{ comment.content }}</p>
 
-<div>
-{% for comment in comments %}
-<div class="d-flex">
-  <p class="comment">{{ comment.user }} - {{ comment.content }}</p>
-
-  {% comment %} 댓글 삭제 {% endcomment %}
-  {% if user.username == comment.user.username %}
-  <div class="delete-comment">
-    <form action="{% url 'community:delete_comment' comment.pk %}" method="POST">
-      {% csrf_token %}
-      <button style="box-shadow:none; border:0; background-color:#fff;" type="sumbit"><i class="fa-solid fa-trash-can"></i></button>
-    </form>
+    {% comment %} 댓글 삭제 {% endcomment %}
+    {% if user.username == comment.user.username %}
+    <div class="delete-comment">
+      <form id="delete-form" data-id="{{ comment.pk }}">
+        {% csrf_token %}
+        <button style="box-shadow:none; border:0; background-color:#fff;" type="sumbit"><i class="fa-solid fa-trash-can"></i></button>
+      </form>
+    </div>
+    {% endif %}
   </div>
-  {% endif %}
-</div>
-
 
 {% empty %}
   <p>아름다운 댓글을 달아주세요! :)</p>
@@ -157,7 +154,9 @@
 <hr>
 <h4>댓글 작성</h4>
 {% if request.user.is_authenticated %}
-  <form action="{% url 'community:create_comment' review.pk %}" method="POST">
+{% comment %} <form id="create-form" data-id="{{ review.pk }}"> {% endcomment %}
+  <form action="{% url 'community:create_comment' review.pk %}" method="post">
+    
     {% csrf_token %}
     {{ comment_form }}
   <div class="d-flex">
@@ -174,13 +173,78 @@
 {% endblock  %}
 {% block script %}
 <script>
+  const deleteForms = document.querySelectorAll('#delete-form')
+  const createForm = document.querySelector('#create-form')
   
   // 정말 삭제?
-
   function doSubmit() {
     if (!confirm('정말 지우시겠습니까?')) { return false }
     else { return true }
   }
+  
+  
+  /*
+  // 댓글 실시간 추가 - 구현 실패
+  createForm.addEventListener('submit', e => {
+    e.preventDefault()
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    const reviewId = e.target.dataset.id
+    console.log(reviewId)
+    axios({
+      method: 'POST',
+      headers: {'X-CSRFToken': csrftoken},
+      url:`http://127.0.0.1:8000/community/${reviewId}/comments/create/`,
+    })
+      .then(res => {
+        console.log(res)
+        //const outerDiv = document.querySelector('.comments')
+        //const newP = document.createElement('p')
+        //newP.setAttribute('class', 'comment')
+        //console.log(newP)
+        //newP.innerText = `comment.user - comment.content`
+        //outerDiv.appendChild(newP)
+        console.log(res.data.left_count)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  })
+  
+*/
+  
+  // 댓글 실시간 삭제
+  deleteForms.forEach(deleteForm => {
+    deleteForm.addEventListener('submit', e => {
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+      e.preventDefault()
+      const commentId = e.target.dataset.id
+      axios({
+        method: 'delete',
+        headers: {'X-CSRFToken': csrftoken},
+        url:`http://127.0.0.1:8000/community/${commentId}/comment/delete/ `,
+      })
+        .then(res => {
+          const checkDelete = document.querySelectorAll('.comment')
+          const commentLength = document.querySelector('.comments_length')
+          const leftCount = res.data.left_count
 
+          // 댓글 삭제
+          const form = e.target
+          const p = form.parentNode
+          const div = p.parentNode
+          div.remove()
+          console.log(leftCount)
+          if (leftCount) {
+            commentLength.innerText = `${leftCount}개의 댓글이 있습니다.`
+          } else {
+            commentLength.innerText = '아름다운 댓글을 달아주세요! :)'
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      
+    })
+  })
 </script>
 {% endblock script %}

@@ -1,10 +1,14 @@
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
+from requests import Response
 from .models import Review, Comment
 from movies.models import Movie
 from .forms import ReviewForm, CommentForm
-from django.views.decorators.http import require_GET, require_POST, require_http_methods
+from django.views.decorators.http import require_POST, require_http_methods, require_safe
+from rest_framework.decorators import api_view
 
-@require_GET
+
+@require_safe
 def review_list(request):
     reviews = Review.objects.order_by('-pk')
     context = {
@@ -39,7 +43,7 @@ def create_review(request, movie_pk):
     return render(request, 'community/review_create.html', context)
 
 
-@require_GET
+@require_safe
 def detail_review(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
 
@@ -54,6 +58,9 @@ def detail_review(request, review_pk):
     }
     return render(request, 'community/review_detail.html', context)
 
+
+# 댓글 추가
+#@api_view(['POST'])
 @require_POST
 def create_comment(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
@@ -65,11 +72,12 @@ def create_comment(request, review_pk):
         comment.save()
         return redirect('community:detail_review', review.pk)
     context = {
-        'comment_form': comment_form,
         'review': review,
+        'comment_form': comment_form,
         'comments': review.comment_set.all(),
     }
-    return render(request, 'community/detail_review.html', context)
+    print('sdf')
+    return render(request, 'coummunity/review_detail.html', context)
 
 
 # 리뷰 삭제
@@ -83,14 +91,17 @@ def delete_review(request, review_pk):
 
 
 # 댓글 삭제
-@require_POST
+@api_view(['POST', 'DELETE'])
 def delete_comment(request, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     review = Review.objects.get(pk = comment.review.pk)
-    if request.method == 'POST':
+    if request.method == 'DELETE':
         comment.delete()
-        return redirect('community:detail_review', review.pk)
-    return render(request, 'coummunity/review_detail.html', review.pk)
+        info = {
+            'left_count': len(review.comment_set.all())
+        }
+        return JsonResponse(info)
+    return JsonResponse(status=400)
 
 
 # 리뷰 수정
