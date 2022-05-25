@@ -11,7 +11,6 @@ urlpatterns = [
     path('search-result/', views.search_result, name='search_result'),
     
     path('allmovie/', views.movie_list, name='movie_list'),
-    path('movie_selected/<int:movie_pk>', views.movie_detail, name='movie_detail'),
-    # 영화 좋아요 -> 좋아요 한 영화 순으로 나열
     path('movie_selected/<int:movie_pk>/like/', views.like_movie, name='like_movie'),
+    path('movie_selected/<int:movie_pk>', views.movie_detail, name='movie_detail'),
 ]   

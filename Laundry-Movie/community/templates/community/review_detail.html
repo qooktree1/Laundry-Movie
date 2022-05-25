@@ -41,13 +41,7 @@
     text-align: center;
     width: 5em;
   }
-  .star-rating label {
-    -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-    -webkit-text-stroke-width: 2.3px;
-    -webkit-text-stroke-color: #2b2a29;
-    cursor: pointer;
-  }
-  .star-rating :checked ~ label {
+  .checked{
     -webkit-text-fill-color: #F9D923;
   }
 </style>
@@ -68,19 +62,44 @@
 {% comment %} 제목 {% endcomment %}
 <br>
 <div>
-  <h3>{{ review.title }}</h3>
-  <div class="ms-3">
-    <div class="star-rating">
-      <label class="fa fa-star star-1"></label>
-      <label class="fa fa-star star-2"></label>
-      <label class="fa fa-star star-3"></label>
-      <label class="fa fa-star star-4"></label>
-      <label class="fa fa-star star-5"></label>
+  <h3 class="fs-1">{{ review.title }}</h3>
+  <div class="">
+
+    {% comment %}  별점 {% endcomment %}
+    <div class="star-rating mt-3">
+      {% if review.rank == 1 %}
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star checked"></span>
+      {% elif  review.rank == 2 %}
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+      {% elif  review.rank == 3 %}
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+      {% elif  review.rank == 4 %}
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+      {% else %}
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+      {% endif %}
     </div>
-    
-    
-    <p>여기 별로 바꾸기   </p>
-    <p>후기: {{ review.content }}</p>
+    <p class="mt-4 fs-4">후기: {{ review.content }}</p>
     <p>{{ review.created_at }}</p>
   </div>
 </div>
@@ -161,58 +180,6 @@
   function doSubmit() {
     if (!confirm('정말 지우시겠습니까?')) { return false }
     else { return true }
-  }
-
-
-
-  // 별점 구현
-
-  star1 = document.querySelector('.star-1')
-  star2 = document.querySelector('.star-2')
-  star3 = document.querySelector('.star-3')
-  star4 = document.querySelector('.star-4')
-  star5 = document.querySelector('.star-5')
-
-  if ({{ review.rank }} == 1) { showstar1() }
-  else if ({{ review.rank }} == 2) { showstar2() }
-  else if ({{ review.rank }} == 3) { showstar3() }
-  else if ({{ review.rank }} == 4) { showstar4() }
-  else if ({{ review.rank }} == 5) { showstar5() }
-
-  function showstar1() {
-    star1.setAttribute('class', 'fa fa-star checked')
-    star2.setAttribute("class", "fa fa-star")
-    star3.setAttribute("class", "fa fa-star")
-    star4.setAttribute("class", "fa fa-star")
-    star5.setAttribute("class", "fa fa-star")
-  }
-  function showstar2() {
-    star1.setAttribute('class', 'fa fa-star checked')
-    star2.setAttribute("class", "fa fa-star checked")
-    star3.setAttribute("class", "fa fa-star")
-    star4.setAttribute("class", "fa fa-star")
-    star5.setAttribute("class", "fa fa-star")
-  }
-  function showstar3() {
-    star1.setAttribute('class', 'fa fa-star checked')
-    star2.setAttribute("class", "fa fa-star checked")
-    star3.setAttribute("class", "fa fa-star checked")
-    star4.setAttribute("class", "fa fa-star")
-    star5.setAttribute("class", "fa fa-star")
-  }
-  function showstar4() {
-    star1.setAttribute('class', 'fa fa-star checked')
-    star2.setAttribute("class", "fa fa-star checked")
-    star3.setAttribute("class", "fa fa-star checked")
-    star4.setAttribute("class", "fa fa-star checked")
-    star5.setAttribute("class", "fa fa-star")
-  }
-  function showstar5() {
-    star1.setAttribute('class', 'fa fa-star checked')
-    star2.setAttribute("class", "fa fa-star checked")
-    star3.setAttribute("class", "fa fa-star checked")
-    star4.setAttribute("class", "fa fa-star checked")
-    star5.setAttribute("class", "fa fa-star checked")
   }
 
 </script>

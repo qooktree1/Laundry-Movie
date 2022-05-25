@@ -75,8 +75,8 @@ def logout(request):
     return redirect('movies:index')
 
 
+# @api_view(['GET', 'POST'])
 @login_required
-@api_view(['GET', 'POST'])
 @require_http_methods(['GET', 'POST'])
 def profile(request, username):
     user = get_object_or_404(get_user_model(), username=username)

@@ -3,13 +3,15 @@ from django.views.decorators.http import require_safe
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_POST, require_http_methods
 from django.shortcuts import get_list_or_404, render, redirect, get_object_or_404
 from .models import Movie, Genre
 from community.models import Review, Comment
 from .serializers import GenreSerializer, MovieDetailSerializer, MovieSerializer
 from django.db.models import Q
 from django.contrib.auth import get_user_model
+
+
 
 
 @require_safe
@@ -206,12 +208,13 @@ def search_result(request):
 def like_movie(request, movie_pk):
     if request.user.is_authenticated:
         movie = get_object_or_404(Movie, pk=movie_pk)
+        user = request.user
         
-        if movie.like_users.filter(pk=request.user.pk).exists():
-            movie.like_users.remove(request.user)
+        if movie.like_users.filter(pk=user.pk).exists():
+            movie.like_users.remove(user)
             liked = False
         else:
-            movie.like_users.add(request.user)
+            movie.like_users.add(user)
             liked = True
         like_status = {
             'liked' : liked,

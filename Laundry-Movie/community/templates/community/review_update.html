@@ -1,36 +1,132 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
+<style>
+  .menu-links-3{
+    active: true;
+  }
+  .menu-links-1, .menu-links-2, .menu-links-4{
+    color: black;
+  }
+  .checked {
+    color: #0095F9;
+  }
+  .star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    line-height: 2rem;
+    font-size: 1.5rem;
+    justify-content: space-around;
+    padding: 0 0.2em;
+    text-align: center;
+    width: 5em;
+  }
+
+  .star-rating input {
+    display: none;
+  }
+  .star-rating label {
+    -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 2.3px;
+    -webkit-text-stroke-color: #2b2a29;
+    cursor: pointer;
+  }
+  .star-rating :checked ~ label {
+    -webkit-text-fill-color: #F9D923;
+  }
+   
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    -webkit-text-fill-color: #FFE3A9;
+  }
+</style>
 {% endblock style %}
 
 {% block content %}
-<h1 class="text-center mt-3">{{ movie.title }}</h1>
-
-<br>
+<h1 class="text-center mt-3">{{ review.movie.title }}</h1>
+<hr>
 <div class="big-tull ms-5 d-flex justify-content-center">
   <form action="{% url 'community:update_review' review.pk %}" method="POST">
   {% csrf_token %}
     <div class="d-flex">
-      <p class="me-5">한 줄 평 {{ form.title }}  </p>
-      <p>내가 주는 평점 {{ form.rank }} </p>
+      <p class="me-5">한 줄 평 {{ form.title }}</p>
     </div>
-    
-    <p class="text-center">후기</p>
+    <br>
 
-    <div class="d-flex align-items-center">
-      <p>{{ form.content }}</p>
-      <button type="submit "class="button-57 text-center mx-3" role="button"><span class="text">수정</span><span>완료</span></button>
+    <p>별점</p>
+    <div class="star-rating ms-1">
+      {% comment %} ?? input 값을 form.rate로 전달할 수 있게 하기/  별점 선택 반대로 됨 ; {% endcomment %}
+      <input type="radio" id="5-stars" name="rank" class="my-rank" value="5"/>
+      <label for="5-stars"><span class="fa fa-star" onclick = "clickstar5()"></span></label>
+      <input type="radio" id="4-stars" name="rank" class="my-rank" value="4"/>
+      <label for="4-stars"><span class="fa fa-star" onclick = "clickstar4()"></span></label>
+      <input type="radio" id="3-stars" name="rank" class="my-rank" value="3"/>
+      <label for="3-stars"><span class="fa fa-star" onclick = "clickstar3()"></span></label>
+      <input type="radio" id="2-stars" name="rank" class="my-rank" value="2"/>
+      <label for="2-stars"><span class="fa fa-star" onclick = "clickstar2()"></span></label>
+      <input type="radio" id="1-stars" name="rank" class="my-rank" value="1"/>
+      <label for="1-stars"><span class="fa fa-star" onclick = "clickstar1()"></span></label>
     </div>
-  </form>  
+
+    
+    <br>
+    <p class="">후기</p>
+    <div class="">
+      <p>{{ form.content }}</p>
+      <button type="submit "class="button-57 text-center me-5" role="button"><span class="text">수정</span><span>완료</span></button>
+    </div>
+  </form>
   
 </div>
 <hr>
 {% comment %} 뒤로가기 버튼 위로 옮기거나 꾸미면 좋을 것 같습니다. (취소로 변경해도 될 것 같슴다) {% endcomment %}
-<a href="{% url 'community:reviews' %}">BACK</a>
+<a style="" href="{% url 'community:detail_review' review.pk %}" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-arrow-left fa-xl"></i></span><span>뒤로</span></a>
 
 
 {% endblock content %}
 
 
 {% block script %}
+<script>
+  function clickstar1() {
+    document.setAttribute("class", "fa fa-star checked");
+    document.setAttribute("class", "fa fa-star");
+    document.setAttribute("class", "fa fa-star");
+    document.setAttribute("class", "fa fa-star");
+    document.setAttribute("class", "fa fa-star");
+ }
+
+ function clickstar2(){
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star");
+     document.setAttribute("class", "fa fa-star");
+     document.setAttribute("class", "fa fa-star");
+ }
+
+ function clickstar3(){
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star");
+     document.setAttribute("class", "fa fa-star");
+ }
+
+ function clickstar4(){
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star");
+ }
+
+ function clickstar5(){
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+     document.setAttribute("class", "fa fa-star checked");
+ }
+
+</script>
 {% endblock script %}
