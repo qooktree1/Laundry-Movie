@@ -53,7 +53,7 @@ def signup(request):
             user = form.save()
             auth_login(request, user)
             return redirect('movies:home')
-    return render(request,'movies/index.html')
+    return redirect('movies:index')
 
 
 @require_http_methods(['GET', 'POST'])
@@ -65,8 +65,8 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'movies:home')
-    return render(request, 'movies/index.html', locals())
+            return redirect('movies:home')
+    return redirect('movies:index')
 
 
 @require_POST

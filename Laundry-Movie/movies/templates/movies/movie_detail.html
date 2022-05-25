@@ -87,7 +87,7 @@
 
         {% comment %} 리뷰 쓰기!!! -> 버튼 눌렀을 시 community create로 이동 {% endcomment %}
         <div class="mb-2 ms-3 text-center">
-          <a style="width:100%; max-width:20rem;" href="{% url 'community:create_review' movie.id %}" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-comment-dots fa-2xl"></i></span><span>리뷰 쓰기</span></a>
+          <a style="width:100%; max-width:20rem;" href="{% url 'community:create_review' movie.id %}" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-message-pen"></i></span><span>리뷰 쓰기</span></a>
         </div>
 
       </div>
@@ -135,10 +135,10 @@
         if (isLiked === true) { heart.setAttribute('style', 'color:red')}
         else { heart.setAttribute('style', 'color:black') }
         likeCount.innerText = isLikeNumber
-          })
-          .catch(error => {
-            console.log(error)
-          })
-        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  })
 </script>
 {% endblock script %}

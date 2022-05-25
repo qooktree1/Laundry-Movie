@@ -49,7 +49,7 @@
 
 
 {% comment %}  런드리 무비 {% endcomment %}
-<h3>{{ user.username }}님의 런드리무비</h3>
+<h3>{{ user.username }} 님의 런드리무비</h3>
 <div class="" id="show-movies">
   <div class="row mx-auto" id="create-or-delete">
   {% for review in user.review_set.all %}
@@ -65,10 +65,10 @@
 
 {% comment %} 댓글 {% endcomment %}
 <hr>
-<h3>{{ user.username }}님이 작성한 댓글</h3>
+<h3>{{ user.username }} 님이 작성한 댓글</h3>
 <br>
 {% for comment in user.comment_set.all %}
-  <p>▶ {{ comment.content }}</p>
+  <p><i class="fa-solid fa-comment-dots"> {{ comment.content }}</i></p>
 {% endfor %}
 
 {% endblock content %}

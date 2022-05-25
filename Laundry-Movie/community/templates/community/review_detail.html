@@ -29,6 +29,27 @@
   .img-a:hover .title-text{
     visibility: visible;
   }
+
+  {% comment %} 별점 {% endcomment %}
+  .star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    line-height: 2rem;
+    font-size: 1.5rem;
+    justify-content: space-around;
+    padding: 0 0.2em;
+    text-align: center;
+    width: 5em;
+  }
+  .star-rating label {
+    -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 2.3px;
+    -webkit-text-stroke-color: #2b2a29;
+    cursor: pointer;
+  }
+  .star-rating :checked ~ label {
+    -webkit-text-fill-color: #F9D923;
+  }
 </style>
 {% endblock style %}
 {% block content %}
@@ -47,11 +68,20 @@
 {% comment %} 제목 {% endcomment %}
 <br>
 <div>
-  <h3>제목: {{ review.title }}</h3>
+  <h3>{{ review.title }}</h3>
   <div class="ms-3">
-    <p>평점: {{ review.rank }}</p>
+    <div class="star-rating">
+      <label class="fa fa-star star-1"></label>
+      <label class="fa fa-star star-2"></label>
+      <label class="fa fa-star star-3"></label>
+      <label class="fa fa-star star-4"></label>
+      <label class="fa fa-star star-5"></label>
+    </div>
+    
+    
+    <p>여기 별로 바꾸기   </p>
     <p>후기: {{ review.content }}</p>
-    <p>생성시간: {{ review.created_at }}</p>
+    <p>{{ review.created_at }}</p>
   </div>
 </div>
 
@@ -67,9 +97,9 @@
 
 
   <div class="delete-review">
-    <form action="{% url 'community:delete_review' review.pk %}" method="POST">
+    <form class="delete-form" action="{% url 'community:delete_review' review.pk %}" method="POST" onsubmit="return doSubmit()">
       {% csrf_token %}
-      <button type="button" onClick='confirmBtn()' style="width:100%; max-width:120px;" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-trash fa-xl"></i></span><span>리뷰 삭제</span></button>
+      <button style="width:100%; max-width:120px;" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-trash fa-xl"></i></span><span>리뷰 삭제</span></button>
     </form>
   </div>
 
@@ -77,9 +107,9 @@
 {% endif %}
 <hr>
 
+<br>
 
-
-<h4>코멘트</h4>
+<h4>댓글</h4>
 {% if comments|length %}
   <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
 {% endif %}
@@ -102,43 +132,88 @@
 
 
 {% empty %}
-  <p><strong>아름다운 댓글을 달아주세요! :)</strong></p>
+  <p>아름다운 댓글을 달아주세요! :)</p>
 {% endfor %}
 
-
 <hr>
-
 <h4>댓글 작성</h4>
 {% if request.user.is_authenticated %}
   <form action="{% url 'community:create_comment' review.pk %}" method="POST">
     {% csrf_token %}
     {{ comment_form }}
-    <br>
-
-<div class="d-flex">
-    <button style="" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-comment fa-2xl"></i></span><span>댓글 작성</span></button>
+  <div class="d-flex">
+    <button style="max-width" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-comment fa-xl"></i></span><span>댓글 작성</span></button>
   </form>
-  {% else %}
-  <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
-  {% endif %}
-  <a style="" href="{% url 'community:reviews' %}" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-backward fa-2xl"></i></span><span>뒤로</span></a>
-</div>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
+    {% endif %}
+  </div>
+<hr>
+  <a style="" href="{% url 'community:reviews' %}" class="button-57 text-center" role="button"><span class="text"><i class="fa-solid fa-arrow-left fa-xl"></i></span><span>뒤로</span></a>
   
   
 {% endblock  %}
 {% block script %}
 <script>
-  function confirmBtn() {
-    up = confirm('정말 지우시겠습니까?')
+  
+  // 정말 삭제?
 
-    if (up)
-    {
-      document.form.submit()
-    }
-    else {
-      alert('삭제를 취소하셨습니다.')
-      return false
-    }
+  function doSubmit() {
+    if (!confirm('정말 지우시겠습니까?')) { return false }
+    else { return true }
   }
+
+
+
+  // 별점 구현
+
+  star1 = document.querySelector('.star-1')
+  star2 = document.querySelector('.star-2')
+  star3 = document.querySelector('.star-3')
+  star4 = document.querySelector('.star-4')
+  star5 = document.querySelector('.star-5')
+
+  if ({{ review.rank }} == 1) { showstar1() }
+  else if ({{ review.rank }} == 2) { showstar2() }
+  else if ({{ review.rank }} == 3) { showstar3() }
+  else if ({{ review.rank }} == 4) { showstar4() }
+  else if ({{ review.rank }} == 5) { showstar5() }
+
+  function showstar1() {
+    star1.setAttribute('class', 'fa fa-star checked')
+    star2.setAttribute("class", "fa fa-star")
+    star3.setAttribute("class", "fa fa-star")
+    star4.setAttribute("class", "fa fa-star")
+    star5.setAttribute("class", "fa fa-star")
+  }
+  function showstar2() {
+    star1.setAttribute('class', 'fa fa-star checked')
+    star2.setAttribute("class", "fa fa-star checked")
+    star3.setAttribute("class", "fa fa-star")
+    star4.setAttribute("class", "fa fa-star")
+    star5.setAttribute("class", "fa fa-star")
+  }
+  function showstar3() {
+    star1.setAttribute('class', 'fa fa-star checked')
+    star2.setAttribute("class", "fa fa-star checked")
+    star3.setAttribute("class", "fa fa-star checked")
+    star4.setAttribute("class", "fa fa-star")
+    star5.setAttribute("class", "fa fa-star")
+  }
+  function showstar4() {
+    star1.setAttribute('class', 'fa fa-star checked')
+    star2.setAttribute("class", "fa fa-star checked")
+    star3.setAttribute("class", "fa fa-star checked")
+    star4.setAttribute("class", "fa fa-star checked")
+    star5.setAttribute("class", "fa fa-star")
+  }
+  function showstar5() {
+    star1.setAttribute('class', 'fa fa-star checked')
+    star2.setAttribute("class", "fa fa-star checked")
+    star3.setAttribute("class", "fa fa-star checked")
+    star4.setAttribute("class", "fa fa-star checked")
+    star5.setAttribute("class", "fa fa-star checked")
+  }
+
 </script>
 {% endblock script %}
