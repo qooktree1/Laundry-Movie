@@ -6,7 +6,7 @@ class Genre(models.Model):
 
 
 class Movie(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True, unique=True)
     genres = models.ManyToManyField(Genre, related_name="genre")
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
 
