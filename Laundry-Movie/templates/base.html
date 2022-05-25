@@ -36,11 +36,20 @@
       .home-tip{
         display: flex;
         justify-content: center;
+        margin: auto;
       }
-    }
-    @media screen and (max-width:768px) {
       .lg-collapse{
         display: none;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .button-81 {
+        font-size: 1.125rem;
+        padding: 1rem 2rem;
+      }
+      .nav-text{
+        font-size:1.5rem;
       }
     }
     @media screen and (max-width:992px){
@@ -49,10 +58,12 @@
       }
       
     }
-    .home-tip{
-      margin: auto;
+    @media screen and (min-width:992px){
+      .nav-space{
+        margin-right:25px;
+      }
     }
-
+    
   {% comment %} 버튼 {% endcomment %}
   .button-57 {
     position: relative;
@@ -145,13 +156,6 @@
     background-color: #1e293b;
     color: #fff;
   }
-  
-  @media (min-width: 768px) {
-    .button-81 {
-      font-size: 1.125rem;
-      padding: 1rem 2rem;
-    }
-  }
   </style>
   {% block style %}
   {% endblock style %}
@@ -172,16 +176,16 @@
           {% comment %} 메뉴들 {% endcomment %}
           <ul class="navbar-nav home-tip">
             <li>
-              <a class="nav-link fs-5 menu-links-1 mt-3" aria-current="page" href="{% url 'movies:home' %}"><p class="my-0 py-0 lh-base">Home</p></a>
+              <a class="nav-link fs-5 menu-links-1 mt-3" aria-current="page" href="{% url 'movies:home' %}"><p class="nav-text nav-space">Home</p></a>
             </li>
             <li class="nav-items">
-              <a class="nav-link fs-5 menu-links-2 mt-3" href="{% url 'movies:selected' %}"><p>런드리무비</p></a>
+              <a class="nav-link fs-5 menu-links-2 mt-3" href="{% url 'movies:selected' %}"><p class="nav-text nav-space">런드리무비</p></a>
             </li>
             <li class="nav-items">
-              <a class="nav-link fs-5 menu-links-3 mt-3" href="{% url 'community:reviews' %}"><p>빨래후기</p></a>
+              <a class="nav-link fs-5 menu-links-3 mt-3" href="{% url 'community:reviews' %}"><p class="nav-text nav-space">영화후기</p></a>
             </li>
             <li class="nav-items">
-              <a class="nav-link fs-5 menu-links-4 mt-3" href="{% url 'movies:tips' %}"><p>빨래TIP</p></a>
+              <a class="nav-link fs-5 menu-links-4 mt-3" href="{% url 'movies:tips' %}"><p class="nav-text">빨래TIP</p></a>
             </li>
           </ul>
 
@@ -257,3 +261,8 @@
 {% block script %}
 {% endblock script %}
 </html>
+
+
+
+
+

@@ -27,13 +27,3 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user',)
-        
-
-
-# class CustomUserChangeForm(UserChangeForm):
-# 	password = None
-#     # UserChangeForm에서는 password를 수정할 수 없다.
-#     # 하지만 이렇게 None 값으로 지정해주지 않으면 password를 변경할 수 없다는 설명이 화면에 표현된다.
-#     class Meta:
-#         model = get_user_model()
-#         fields = ['email', 'first_name', 'last_name',]

@@ -19,9 +19,6 @@ from django.views.decorators.http import require_POST, require_http_methods, req
 
 from community.models import Review, Comment
 
-#def index(request):
-#    return render(request, 'movies/home.html')
-
 
 @require_safe
 def people(request, username):
@@ -42,10 +39,6 @@ def signup(request):
             return redirect('movies:home')
 
     if request.method == 'POST':
-
-        # user_info = User.objects.all()
-        # if request.POST['password1'] != request.POST['password2']:
-        #     return redirect('movies:index')
 
         form = CustomUserCreationForm(request.POST)
         

@@ -139,6 +139,23 @@
     })
     $('input').on('keydown', function (e) { if (event.keyCode == 9) { e.stopPropagation(); } });
 
+
+
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    axios({
+      method: 'post',
+      headers: {'X-CSRFToken': csrftoken},
+      url: `http://127.0.0.1:8000/accounts/`,
+    })
+      .then(res => {
+//        const users = res.data.users
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
   </script>
 </body>
 </html>

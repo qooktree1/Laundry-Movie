@@ -52,10 +52,8 @@
       <p class="me-5">한 줄 평 {{ form.title }}</p>
     </div>
     <br>
-
-    <p>별점</p>
+    
     <div class="star-rating ms-1">
-      {% comment %} ?? input 값을 form.rate로 전달할 수 있게 하기/  별점 선택 반대로 됨 ; {% endcomment %}
       <input type="radio" id="5-stars" name="rank" class="my-rank" value="5"/>
       <label for="5-stars"><span class="fa fa-star" onclick = "clickstar5()"></span></label>
       <input type="radio" id="4-stars" name="rank" class="my-rank" value="4"/>

@@ -47,14 +47,13 @@
 <div class="mt-5 container">
 
   <div class="text-center">
-    <h1>어떤 빨래를 하시나요?</h1>
+    <img class="text-center img-fluid" src="{% static 'choose_title.png' %}" alt="추천 질문">
   
   <form id="select-form" class="mt-5">
     {% csrf_token %}
 
-
-    <h4>빨래 색상</h4>
-    
+    <img class="text-center my-2 img-fluid" src="{% static 'cloth_color.png' %}" alt="빨래 색상">
+    <br>
     <div class="pretty p-icon p-curve p-jelly">
       <input type="radio" name="color" id="white" class="form-check-input color-check" value="white">
       <div class="state p-primary">
@@ -83,8 +82,8 @@
   <form id="select-form" class="mt-5">
     {% csrf_token %}
 
-    <h4>세탁 모드</h4>
-
+    <img class="text-center my-2 img-fluid" src="{% static 'clean_mode.png' %}" alt="빨래 모드">
+    <br>
     <div class="pretty p-icon p-curve p-jelly">
       <input type="radio" name="runtime" id="short" class="form-check-input runtime-check" value="short">
       <div class="state p-warning">
@@ -127,7 +126,7 @@
 
 {% comment %} 추천 런드리 무비 {% endcomment %}
 
-  <h1 class="text-center mb-5">추천 런드리무비</h1>  
+  <img class="mb-5 ms-4 img-fluid" src="{% static 'recom_movie.png' %}" alt="추천 런드리무비"> 
   <div class="" id="show-movies">
     <div class="row mx-auto d-flex justify-content-center" id="create-or-delete">
     {% for movie in highscore_serializer %}
