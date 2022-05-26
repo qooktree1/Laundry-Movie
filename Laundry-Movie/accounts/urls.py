@@ -10,5 +10,4 @@ urlpatterns = [
     path('profile/<username>', views.profile, name="profile"),
     path('<username>/', views.people, name="people"),
 
-
 ]
