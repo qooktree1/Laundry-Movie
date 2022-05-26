@@ -28,11 +28,6 @@ def people(request, username):
     }
     return render(request, 'accounts/people.html', context)
 
-
-'''
-프로필 내용 확인할 때 headers => Token 토큰값 보내기
-'''
-
 @require_http_methods(['GET', 'POST'])
 def signup(request):
     if request.user.is_authenticated:

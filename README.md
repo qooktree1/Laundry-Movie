@@ -12,21 +12,21 @@ $ python -m venv venv
 
 $ source venv/Scripts/activate
 
-$ python install -r requirements.txt
+$ pip install -r requirements.txt
 
 $ python manage.py migrate
 
 $ python manage.py runserver
 ```
 
-```
+```bash
 **### url 창**
 
 # 장르 data 받기
-127.0.0.1:8000/movies/genre_data
+python manage.py loaddata fixtures/genres.json
 
 # 영화 데이터 받기
-127.0.0.1:8000/movies/movie_data
+python manage.py loaddata fixtures/movies.json
 ```
 
 # 📅 프로젝트 기간
