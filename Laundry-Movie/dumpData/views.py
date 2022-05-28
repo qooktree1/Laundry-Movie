@@ -4,9 +4,10 @@ from rest_framework.decorators import api_view
 from movies.models import Movie, Genre
 from movies.serializers import GenreSerializer
 import requests, json
-import logging, traceback
-
-API_KEY = '11006c90d072cfdcbfb249d25eb8f5ee'
+from dotenv import load_dotenv
+import os
+load_dotenv()
+API_KEY = os.environ.get('TMDB_API_KEY')
 BASE_URL = "https://api.themoviedb.org/3"
 
 @api_view(['GET'])
