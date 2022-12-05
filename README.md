@@ -308,9 +308,9 @@ Footer에는 서비스 구현에 참여한 저희의 이름과 깃허브 주소�
 
 ### 📌 유저 프로필 페이지
 
-![Untitled](README.assets/Untitled 30.png)
+![User1](README.assets/user1.png)
 
-![Untitled](README.assets/Untitled 31.png)
+![User2](README.assets/user2.png)
 
 유저 프로필 페이지에는 유저가 직접 프로필 사진을 등록할 수 있도록 하였습니다
 
