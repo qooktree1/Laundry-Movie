@@ -110,7 +110,7 @@ python manage.py loaddata fixtures/movies.json
 
 ![Untitled](README.assets/Untitled.png)
 
-![Untitled](README.assets/Untitled 1.png)
+![sketch](README.assets/sketch.png)
 
 컨셉을 돋보이게 하면서 처음 사용하는 사용자들도 쉽게 이용할 수 있는 홈페이지와 서비스를 위해 간략하게 스케치를 진행하였습니다.
 
@@ -136,7 +136,7 @@ python manage.py loaddata fixtures/movies.json
 
 🔨 구현 전 페이지에서는 버튼을 누르면 색상이 채워지는 방향으로 구상을 했으나 radio 버튼을 활용하고, radio 선택 버튼을 초기화할 수 있는 버튼을 하단에 두어 다시 선택할 수 있도록 하였습니다.
 
-![Untitled](README.assets/Untitled 3.png)
+![Top1](README.assets/top1.png)
 
 🔨 radio 버튼 클릭 시 이벤트가 발생하도록 하여 다른 submit 과정 없이도 추천 영화 목록이 보여질 수 있도록 axios를 사용하였습니다.
 
@@ -204,9 +204,9 @@ python manage.py loaddata fixtures/movies.json
 
 🔨 추천/비추천이 아닌 별점으로 영화에 대한 점수를 매길 수 있도록 하였습니다.
 
-![Untitled](README.assets/Untitled 8.png)
+![Star1](README.assets/star1.png)
 
-![Untitled](README.assets/Untitled 9.png)
+![Star2](README.assets/star2.png)
 
 🔨 별점 작성 시 마우스로 호버링 시 연한 노란색이 채워지다 클릭 시 진한 노란색으로 표현됩니다.
 
@@ -250,7 +250,7 @@ python manage.py loaddata fixtures/movies.json
 
 ### 📌 Home 페이지
 
-![Untitled](README.assets/Untitled 18.png)
+![Home](README.assets/home.png)
 
 <img src="README.assets/Untitled 19.png" alt="Untitled" style="zoom:67%;" />
 
@@ -284,15 +284,13 @@ python manage.py loaddata fixtures/movies.json
 
 매 주 세탁과 빨래에 대한 팁을 업데이트하는 방식으로 만들었습니다.
 
-![Untitled](README.assets/Untitled 24.png)
+![Tip1](README.assets/tip1.png)
 
-![Untitled](README.assets/Untitled 25.png)
+![Tip2](README.assets/tip2.png)
 
 ### 📌 Navbar 그리고 footer
 
-![Untitled](README.assets/Untitled 26.png)
-
-![Untitled](README.assets/Untitled 27.png)
+![Navbar](README.assets/navbar.png)
 
 Navbar에는 각 페이지로 이동할 수 있는 메뉴와 검색창, 그리고 로그인 되어있는 유저의 이름이 보여지는 프로필 버튼이 구현되어 있습니다.
 
@@ -302,7 +300,7 @@ Navbar에는 각 페이지로 이동할 수 있는 메뉴와 검색창, 그리�
 
 <img src="README.assets/Untitled 28.png" alt="Untitled" style="zoom:67%;" />
 
-![Untitled](README.assets/Untitled 29.png)
+![Footer](README.assets/footer.png)
 
 Footer에는 서비스 구현에 참여한 저희의 이름과 깃허브 주소가 포함되어 있으며, 6반의 상징인 티라노를 활용하여 저작권 표시하였습니다.
 
